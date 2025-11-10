@@ -4,7 +4,7 @@ import { IColorSchemeProvider, TDeviceThemes } from "./type";
 
 const ColorSchemeContext = createContext<IColorSchemeProvider | null>(null);
 
-const ColorSchemeProvider = (children: React.ReactNode) => {
+const ColorSchemeProvider = ({ children } : { children: React.ReactNode }) => {
     const [state, setState] = useState(THEME_DARK);
     function changeColorScheme(v: TDeviceThemes) {
         setState(() => {

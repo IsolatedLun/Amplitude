@@ -1,4 +1,4 @@
-import { IColorSchemeValue } from "@/app/components/scheme/type";
+import { IColorSchemeValue } from "@/components/scheme/type";
 
 export const THEME_DARK: IColorSchemeValue = {
     deviceTheme: "dark",

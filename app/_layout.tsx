@@ -1,5 +1,10 @@
-import { Stack } from "expo-router";
+import RootWrapper from "@/components/RootWrapper";
+import { ColorSchemeProvider } from "@/components/scheme/ColorSchemeProvider";
 
 export default function RootLayout() {
-  return <Stack />;
+  return(
+    <ColorSchemeProvider>
+      <RootWrapper />
+    </ColorSchemeProvider>
+  )
 }

@@ -1,15 +1,16 @@
-import { Text, View } from "react-native";
+import CenterContainer from "@/components/containers/CenterContainer";
+import { ETypographyFont, ETypographyFontSize } from "@/components/Typography/types";
+import Typography from "@/components/typography/Typography";
 
 export default function Index() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
-    </View>
+    <CenterContainer alignCenter>
+      <Typography 
+        fontSize={ETypographyFontSize.Title} 
+        fontType={ETypographyFont.Bold}
+      >
+        Amplitude
+      </Typography>
+    </CenterContainer>
   );
 }
