@@ -1,6 +1,6 @@
 import { THEME_DARK, THEME_LIGHT } from "@/utils/css";
 import { createContext, useState } from "react";
-import { IColorSchemeProvider, TDeviceThemes } from "./type";
+import { IColorSchemeProvider, TDeviceThemes } from "./types";
 
 const ColorSchemeContext = createContext<IColorSchemeProvider | null>(null);
 

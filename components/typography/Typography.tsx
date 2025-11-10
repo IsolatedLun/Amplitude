@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Text } from "react-native";
 import { ColorSchemeContext } from "../scheme/ColorSchemeProvider";
-import { ETypographyFont, ETypographyFontSize, ITypography, TTypographysFontFamily } from "./types";
+import { ETypographyFont, ETypographyFontSize, ETypographyTheme, ITypography, TTypographysFontFamily } from "./types";
 
 const Typography = (props: ITypography) => {
     const { state: { colors } } = useContext(ColorSchemeContext)!;
@@ -9,6 +9,11 @@ const Typography = (props: ITypography) => {
         [ETypographyFont.Regular]: "FontRegular",
         [ETypographyFont.Bold]: "FontBold"
     };
+    const themes: Record<ETypographyTheme, string> = {
+            [ETypographyTheme.Default]: colors.screenText,
+            [ETypographyTheme.Primary]: colors.textTheme,
+            [ETypographyTheme.Muted]: colors.textMuted
+        };
     const fontSize: Record<ETypographyFontSize, number> = {
         [ETypographyFontSize.Default]: 12,
         [ETypographyFontSize.Button]: 14,
@@ -21,7 +26,9 @@ const Typography = (props: ITypography) => {
             style={{ 
                 fontFamily: fontType[props.fontType ?? ETypographyFont.Regular],
                 fontSize: fontSize[props.fontSize ?? ETypographyFontSize.Default],
-                color: colors.screenText 
+                color: themes[props.theme ?? ETypographyTheme.Default],
+                textAlign: props.center ? "center" : "auto",
+                ...props.style as any,
             }}
         >
             { props.children }
