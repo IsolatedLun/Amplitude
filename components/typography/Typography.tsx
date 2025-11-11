@@ -15,8 +15,8 @@ const Typography = (props: ITypography) => {
             [ETypographyTheme.Muted]: colors.textMuted
         };
     const fontSize: Record<ETypographyFontSize, number> = {
-        [ETypographyFontSize.Default]: 12,
-        [ETypographyFontSize.Button]: 14,
+        [ETypographyFontSize.Default]: 14,
+        [ETypographyFontSize.Button]: 16,
         [ETypographyFontSize.Title]: 28,
         [ETypographyFontSize.Huge]: 48
     };

@@ -13,6 +13,8 @@ const Icon = (props: IIcon) => {
     const sizes: Record<EIconSize, number> = {
         [EIconSize.Default]: 16,
         [EIconSize.Button]: 18,
+        [EIconSize.Tab]: 24,
+        [EIconSize.Navbar]: 32,
         [EIconSize.Huge]: 81
     };
 

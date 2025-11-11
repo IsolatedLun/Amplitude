@@ -4,7 +4,7 @@ import Icon from "../icon/Icon";
 import { EIconSize } from "../icon/types";
 import { ColorSchemeContext } from "../scheme/ColorSchemeProvider";
 import { ThemeSpec } from "../scheme/types";
-import { ETypographyFont, ETypographyFontSize } from "../Typography/types";
+import { ETypographyFont, ETypographyFontSize } from "../typography/types";
 import Typography from "../typography/Typography";
 import { ECluttonBorderRadius, ECluttonPaddding, ECluttonPaddingSize, ECluttonTheme, IClutton } from "./types";
 
@@ -22,7 +22,7 @@ const Clutton = (props: IClutton) => {
     }
 
     return(
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => props.onPress ? props.onPress() : null}>
             <View style={{ 
                     backgroundColor: _themes[props.theme ?? ECluttonTheme.Primary].backgroundColor,
                     paddingBlock: paddingSize[props.paddingSize ?? ECluttonPaddingSize.Default] 
