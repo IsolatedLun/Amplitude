@@ -11,7 +11,8 @@ export const THEME_DARK: IColorSchemeValue = {
         textError: "hsl(5 67% 50%)"
     },
     themes: {
-        buttonPrimary: { backgroundColor: "hsl(150 70% 50%)", color: null }
+        buttonPrimary: { backgroundColor: "hsl(150 70% 50%)", color: null },
+        inputPrimary: { backgroundColor: "hsl(0 0% 8%)", color: "hsl(0 0% 40%)" }
     }
 }
 
@@ -26,6 +27,7 @@ export const THEME_LIGHT: IColorSchemeValue = {
         textError: "hsl(5 67% 50%)"
     },
     themes: {
-        buttonPrimary: { backgroundColor: "hsl(150 70% 50%)", color: null }
+        buttonPrimary: { backgroundColor: "hsl(150 70% 50%)", color: null },
+        inputPrimary: { backgroundColor: "hsl(0 0% 8%)", color: "hsl(0 0% 40%)" }
     }
 }

@@ -12,9 +12,11 @@ const Typography = (props: ITypography) => {
     const themes: Record<ETypographyTheme, string> = {
             [ETypographyTheme.Default]: colors.screenText,
             [ETypographyTheme.Primary]: colors.textTheme,
-            [ETypographyTheme.Muted]: colors.textMuted
+            [ETypographyTheme.Muted]: colors.textMuted,
+            [ETypographyTheme.Error]: colors.textError
         };
     const fontSize: Record<ETypographyFontSize, number> = {
+        [ETypographyFontSize.Small]: 12,
         [ETypographyFontSize.Default]: 14,
         [ETypographyFontSize.Button]: 16,
         [ETypographyFontSize.Title]: 28,

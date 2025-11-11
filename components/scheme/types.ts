@@ -12,7 +12,8 @@ export interface IColorSchemeValue {
         textError: string
     },
     themes: {
-        buttonPrimary: ThemeSpec
+        buttonPrimary: ThemeSpec,
+        inputPrimary: ThemeSpec
     }
 }
 

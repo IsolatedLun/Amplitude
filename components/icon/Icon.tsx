@@ -20,6 +20,7 @@ const Icon = (props: IIcon) => {
 
     return(
         <MaterialCommunityIcons 
+            style={{ ...props.style as any }}
             name={props.name}
             color={themes[props.theme ?? EIconTheme.Default]}
             size={sizes[props.size ?? EIconSize.Default]}

@@ -1,11 +1,10 @@
-import { ETypographyFontSize } from "@/components/typography/types";
-import Typography from "@/components/typography/Typography";
+import WordInput from "@/components/inputs/WordInput";
 import { View } from "react-native";
 
 const SongsTab = () => {
     return(
         <View>
-            <Typography fontSize={ETypographyFontSize.Title}>six seven</Typography>
+            <WordInput value="" placeholder="Enter song name" title="Title" />
         </View>
     )
 };
