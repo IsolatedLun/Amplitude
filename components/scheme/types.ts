@@ -16,7 +16,10 @@ export interface IColorSchemeValue {
     themes: {
         buttonPrimary: ThemeSpec,
         inputPrimary: ThemeSpec,
-        cardPrimary: ThemeSpec
+        cardPrimary: ThemeSpec,
+        sliderPrimary: ThemeSpec,
+
+        iconButtonGrayscale: ThemeSpec
     }
 }
 

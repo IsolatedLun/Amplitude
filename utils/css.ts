@@ -15,7 +15,10 @@ export const THEME_DARK: IColorSchemeValue = {
     themes: {
         buttonPrimary: { backgroundColor: "hsl(150 70% 50%)", color: null },
         inputPrimary: { backgroundColor: "hsl(0 0% 8%)", color: "hsl(0 0% 40%)" },
-        cardPrimary: { backgroundColor: "hsl(0 0% 10%)", color: "hsl(0 0% 40%)" }
+        cardPrimary: { backgroundColor: "hsl(0 0% 10%)", color: "hsl(0 0% 40%)" },
+        sliderPrimary: { backgroundColor: "hsla(150 70% 50% / 0.6", color: "hsl(150 70% 50%)" },
+
+        iconButtonGrayscale: { backgroundColor: "white", color: "black" }
     }
 }
 
@@ -34,6 +37,9 @@ export const THEME_LIGHT: IColorSchemeValue = {
     themes: {
         buttonPrimary: { backgroundColor: "hsl(150 70% 50%)", color: null },
         inputPrimary: { backgroundColor: "hsl(0 0% 8%)", color: "hsl(0 0% 40%)" },
-        cardPrimary: { backgroundColor: "hsl(0 0% 10%)", color: "hsl(0 0% 40%)" }
+        cardPrimary: { backgroundColor: "hsl(0 0% 10%)", color: "hsl(0 0% 40%)" },
+        sliderPrimary: { backgroundColor: "hsla(150 70% 50% / 0.6)", color: "hsl(150 70% 50%)" },
+
+        iconButtonGrayscale: { backgroundColor: "white", color: "black" }
     }
 }

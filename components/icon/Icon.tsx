@@ -4,8 +4,8 @@ import { ColorSchemeContext } from "../scheme/ColorSchemeProvider";
 import { EIconSize, EIconTheme, IIcon } from "./types";
 
 const Icon = (props: IIcon) => {
-    const { state: { colors } } = useContext(ColorSchemeContext)!;
-    const themes: Record<EIconTheme, string> = {
+    const { state: { colors, themes } } = useContext(ColorSchemeContext)!;
+    const _themes: Record<EIconTheme, string> = {
         [EIconTheme.Default]: colors.screenText,
         [EIconTheme.Primary]: colors.textTheme,
         [EIconTheme.Muted]: colors.textMuted
@@ -22,7 +22,7 @@ const Icon = (props: IIcon) => {
         <MaterialCommunityIcons 
             style={{ ...props.style as any }}
             name={props.name}
-            color={themes[props.theme ?? EIconTheme.Default]}
+            color={_themes[props.theme ?? EIconTheme.Default]}
             size={sizes[props.size ?? EIconSize.Default]}
         />
     )

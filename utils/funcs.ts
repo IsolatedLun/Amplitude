@@ -17,6 +17,14 @@ export function getFileNameFromURI(x: string): string {
     return x.split("/").at(-1) ?? "";
 }
 
+export function formatToMinutes(s: number) {
+    return(
+        String(Math.floor(s / 60)).padStart(2, "0") 
+        + ":" + 
+        String(Math.floor(s % 60)).padStart(2, "0")
+    );
+}
+
 export function tryGetFileNameFromFilePickerAsset(f: TFilePickerAsset): string | null {
     if("fileName" in f) return f.fileName!;
     if("name" in f) return f.name!;
