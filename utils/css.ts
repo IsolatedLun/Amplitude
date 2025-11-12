@@ -8,7 +8,9 @@ export const THEME_DARK: IColorSchemeValue = {
 
         textTheme: "hsl(150 70% 50%)",
         textMuted: "hsl(0 0% 60%)",
-        textError: "hsl(5 67% 50%)"
+        textError: "hsl(5 67% 50%)",
+
+        horizontalLine: "hsl(0 0% 16%)"
     },
     themes: {
         buttonPrimary: { backgroundColor: "hsl(150 70% 50%)", color: null },
@@ -24,7 +26,9 @@ export const THEME_LIGHT: IColorSchemeValue = {
 
         textTheme: "hsl(150 70% 50%)",
         textMuted: "hsl(0 0% 60%)",
-        textError: "hsl(5 67% 50%)"
+        textError: "hsl(5 67% 50%)",
+
+        horizontalLine: "hsl(0 0% 16%)"
     },
     themes: {
         buttonPrimary: { backgroundColor: "hsl(150 70% 50%)", color: null },

@@ -9,7 +9,9 @@ export interface IColorSchemeValue {
 
         textTheme: string,
         textMuted: string,
-        textError: string
+        textError: string,
+
+        horizontalLine: string,
     },
     themes: {
         buttonPrimary: ThemeSpec,

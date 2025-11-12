@@ -11,5 +11,5 @@ export interface IWordInput {
     borderRadiusMode?: EWordInputBorderRadius,
     borderThicknessMode?: EWordInputBorderThickness,
     onInput?: (v: string) => void,
-    onBlur?: () => void
+    onBlur?: (e: any) => void
 }

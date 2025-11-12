@@ -1,3 +1,4 @@
+import { capitalizeSentence } from "@/utils/funcs";
 import { useContext, useEffect, useState } from "react";
 import { TextInput, View } from "react-native";
 import { ColorSchemeContext } from "../scheme/ColorSchemeProvider";
@@ -39,7 +40,7 @@ const WordInput = (props: IWordInput) => {
                     theme={props.error ? ETypographyTheme.Error : ETypographyTheme.Muted}>
                         { props.title }
                 </Typography> 
-                : null 
+                : null
             }
             <TextInput
                 style={{
@@ -57,8 +58,8 @@ const WordInput = (props: IWordInput) => {
                 onChangeText={(v) => props.onInput ? props.onInput(v) : null}
 
                 onFocus={() => setIsFocused(true)}
-                onBlur={() => {
-                    props.onBlur ? props.onBlur() : null;
+                onBlur={(e) => {
+                    props.onBlur ? props.onBlur(e) : null;
                     setIsFocused(false);
                 }}
             />
@@ -68,7 +69,7 @@ const WordInput = (props: IWordInput) => {
                     theme={ETypographyTheme.Error} 
                     fontSize={ETypographyFontSize.Small}
                     style={{ marginInlineStart: 8 }}>
-                        { props.error }
+                        { capitalizeSentence(props.error) }
                 </Typography> 
                 : null 
             }
