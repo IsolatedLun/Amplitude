@@ -15,7 +15,8 @@ export interface IColorSchemeValue {
     },
     themes: {
         buttonPrimary: ThemeSpec,
-        inputPrimary: ThemeSpec
+        inputPrimary: ThemeSpec,
+        cardPrimary: ThemeSpec
     }
 }
 

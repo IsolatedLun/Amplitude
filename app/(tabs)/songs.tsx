@@ -1,27 +1,32 @@
 import WordInput from "@/components/inputs/WordInput";
 import SongCard from "@/components/songCard/SongCard";
 import { ISongCard } from "@/components/songCard/types";
+import { local_GetSongs } from "@/utils/local";
+import { useFocusEffect } from "expo-router";
 import { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
 const SongsTab = () => {
-    const [songs, setSongs] = useState<ISongCard[]>([
-        {
-            id: "1",
-            image: "https://i.pinimg.com/474x/ca/ae/e0/caaee099b79ee7116d3f79e33c935481.jpg",
-            audio: "",
-            title: "Random ass song",
-            author: "123"
-        }
-    ])
+    const [songs, setSongs] = useState<ISongCard[]>([]);
+    const [searchValue, setSearchValue] = useState("");
+
+    useFocusEffect(() => {
+        local_GetSongs().then(setSongs);
+    })
 
     return(
         <View>
-            <WordInput value="" placeholder="Search song..." title="" />
+            <WordInput 
+                onInput={setSearchValue}
+                value={searchValue} 
+                placeholder="Search song..." 
+                title=""
+            />
 
             <FlatList 
                 style={styles.songContainer}
-                data={songs}
+                contentContainerStyle={styles.songContentContainer}
+                data={songs.filter(x => x.title.startsWith(searchValue))}
                 renderItem={x => <SongCard {...x.item} />}
             />
         </View> 
@@ -31,6 +36,10 @@ const SongsTab = () => {
 const styles = StyleSheet.create({
     songContainer: {
         marginBlockStart: 20,
+        gap: 20
+    },
+    songContentContainer: {
+        gap: 32
     }
 })
 

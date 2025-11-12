@@ -8,7 +8,9 @@ export type TTypographysFontFamily = "FontRegular" | "FontBold";
 export interface ITypography {
     children: React.ReactNode,
     
+
     center?: boolean,
+    numberofLines?: number,
     theme?: ETypographyTheme,
     fontType?: ETypographyFont,
     fontSize?: ETypographyFontSize,

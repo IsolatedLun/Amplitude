@@ -32,6 +32,8 @@ const Typography = (props: ITypography) => {
                 textAlign: props.center ? "center" : "auto",
                 ...props.style as any,
             }}
+
+            numberOfLines={props.numberofLines ?? undefined}
         >
             { props.children }
         </Text>
