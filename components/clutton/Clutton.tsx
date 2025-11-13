@@ -11,7 +11,8 @@ import { ECluttonBorderRadius, ECluttonPaddding, ECluttonPaddingSize, ECluttonTh
 const Clutton = (props: IClutton) => {
     const { state: { colors, themes } } = useContext(ColorSchemeContext)!;
     const _themes: Record<ECluttonTheme, ThemeSpec> = {
-        [ECluttonTheme.Primary]: themes.buttonPrimary
+        [ECluttonTheme.Primary]: themes.buttonPrimary,
+        [ECluttonTheme.Danger]: { backgroundColor: colors.textError, color: null }
     }
     const borderRadius: Record<ECluttonBorderRadius, number> = {
         [ECluttonBorderRadius.Cube]: 8,

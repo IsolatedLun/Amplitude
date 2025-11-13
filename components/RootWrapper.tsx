@@ -3,11 +3,13 @@ import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from "expo-router";
 import { useContext, useEffect } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { AuthUserContext } from './auth/AuthProvider';
 import { ColorSchemeContext } from "./scheme/ColorSchemeProvider";
 
 SplashScreen.preventAutoHideAsync();
 const RootWrapper = () => {
     const { state: { colors } } = useContext(ColorSchemeContext)!;
+    const { user } = useContext(AuthUserContext)!;
     const insets = useSafeAreaInsets();
     const [loaded] = useFonts({
         "FontRegular": require("../assets/fonts/UbuntuRegular.ttf"),
@@ -30,7 +32,16 @@ const RootWrapper = () => {
                     paddingInline: (insets.left + insets.right) + 16
                 }
             }}
-        />
+        >
+            <Stack.Protected guard={user === null}>
+                <Stack.Screen name="auth/login" />
+            </Stack.Protected>
+
+            <Stack.Protected guard={user !== null}>
+                <Stack.Screen name="(tabs)" />
+            </Stack.Protected>
+
+        </Stack>
     )
 };
 

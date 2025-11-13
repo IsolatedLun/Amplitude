@@ -40,8 +40,8 @@ const SongPlayer = (props: ISongCard) => {
     return(
         <>
             <Image 
-                source={{ uri: props.image }} 
-                style={styles.backgroundImage} 
+                source={{ uri: props.image }}
+                style={styles.backgroundImage}
                 blurRadius={32}
             />
             <CenterContainer style={styles.container}>
@@ -54,7 +54,7 @@ const SongPlayer = (props: ISongCard) => {
                     <IconButton 
                         name="dots-vertical"
                         theme={EIconButtonTheme.Transparent}
-                        onPress={handleGoBack}
+                        onPress={() => null}
                     />
                 </View>
                 <View style={styles.contentContainer}>

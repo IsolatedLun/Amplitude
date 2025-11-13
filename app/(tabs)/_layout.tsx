@@ -1,3 +1,4 @@
+import { AuthUserContext } from "@/components/auth/AuthProvider";
 import Icon from "@/components/icon/Icon";
 import { EIconSize, EIconTheme } from "@/components/icon/types";
 import Navbar from "@/components/navbar/Navbar";
@@ -26,6 +27,7 @@ function constructTab(theme: IColorSchemeValue, props: ITab) {
 
 const MainLayout = () => {
     const { state } = useContext(ColorSchemeContext)!;
+    const { user } = useContext(AuthUserContext)!;
     const tabs: ITab[] = [
         { name: "songs", title: "Songs", icon: "music-circle-outline", activeIcon: "music-circle" },
         { name: "favorites", title: "Favorites", icon: "heart-circle-outline", activeIcon: "heart-circle" },

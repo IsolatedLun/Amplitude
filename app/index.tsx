@@ -27,16 +27,11 @@ export default function Index() {
       </View>
 
       <View style={styles.buttonContainer}>
-        <Clutton 
-          text="Continue" 
-          icon="arrow-right" 
-          iconOrientation="row-reverse" 
-          onPress={() => router.push("/(tabs)/songs")}
-        />
-        <Clutton 
+        <Clutton
           text="Login" 
             icon="login" 
             iconOrientation="row-reverse" 
+            onPress={() => router.push("/auth/login")}
         />
       </View>
     </CenterContainer>

@@ -1,7 +1,7 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { ComponentProps } from "react";
 
-export enum ECluttonTheme { Primary };
+export enum ECluttonTheme { Primary, Danger };
 export enum ECluttonBorderRadius { Cube, Cylidner };
 export enum ECluttonPaddding { Square, Rectangle };
 export enum ECluttonPaddingSize { Default };
