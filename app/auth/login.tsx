@@ -7,20 +7,16 @@ import { EIconSize, EIconTheme } from "@/components/icon/types";
 import WordInput from "@/components/inputs/WordInput";
 import { ETypographyFontSize, ETypographyTheme } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
+import { USER_VALIDATION_SCHEMA } from "@/utils/global";
 import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import { useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import * as YUP from "yup";
 
 const LoginPage = () => {
     const router = useRouter();
     const { user, login } = useContext(AuthUserContext)!;
     const [loginError, setLoginError] = useState<string | null>(null);
-    const loginValidationSchema = YUP.object().shape({
-        username: YUP.string().required(),
-        password: YUP.string().min(8).required()
-    })
 
     function handleSubmit(v: IAuthUser) {
         login(v)
@@ -30,7 +26,7 @@ const LoginPage = () => {
     
     return(
         <Formik 
-            validationSchema={loginValidationSchema}
+            validationSchema={USER_VALIDATION_SCHEMA}
             initialValues={{ username: "", password: "" }}
             onSubmit={handleSubmit}
         >

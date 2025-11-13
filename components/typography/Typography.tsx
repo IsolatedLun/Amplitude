@@ -18,7 +18,7 @@ const Typography = (props: ITypography) => {
     const fontSize: Record<ETypographyFontSize, number> = {
         [ETypographyFontSize.Small]: 12,
         [ETypographyFontSize.Default]: 14,
-        [ETypographyFontSize.Button]: 16,
+        [ETypographyFontSize.Button]: 12,
         [ETypographyFontSize.Title]: 28,
         [ETypographyFontSize.Huge]: 48
     };

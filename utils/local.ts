@@ -3,7 +3,7 @@ import { ISongCard } from "@/components/songCard/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SecureStore from 'expo-secure-store';
 
-// fetching songs
+// fetching/deleting songs
 export async function local_GetSongs(): Promise<ISongCard[]> {
     const _res = await AsyncStorage.getItem("songs");
     const res: ISongCard[] = _res ? JSON.parse(_res) : [];
@@ -26,9 +26,18 @@ export async function local_UploadSong(x: ISongCard): Promise<void> {
     return AsyncStorage.setItem("songs", JSON.stringify(res));
 }
 
+export async function local_ClearSongs() {
+    AsyncStorage.removeItem("songs");
+}
+
+// auth
 export async function local_getMockLoginUser(): Promise<IAuthUser> {
     const res = await SecureStore.getItemAsync("user");
     if(res)
         return JSON.parse(res);
     return Promise.reject();
+}
+
+export async function local_editMockUser(v: IAuthUser) {
+    return await SecureStore.setItemAsync("user", JSON.stringify(v));
 }

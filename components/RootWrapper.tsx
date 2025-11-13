@@ -32,7 +32,9 @@ const RootWrapper = () => {
                     paddingInline: (insets.left + insets.right) + 16
                 }
             }}
+            initialRouteName='index'
         >
+            <Stack.Screen name="index" />
             <Stack.Protected guard={user === null}>
                 <Stack.Screen name="auth/login" />
             </Stack.Protected>
