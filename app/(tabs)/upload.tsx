@@ -4,7 +4,7 @@ import { EIconSize, EIconTheme } from "@/components/icon/types";
 import MediaInput from "@/components/inputs/MediaInput";
 import { EMediaInputMode } from "@/components/inputs/types";
 import WordInput from "@/components/inputs/WordInput";
-import { ISongCard } from "@/components/songCard/types";
+import { ISongCard, ISongCardFormData } from "@/components/songCard/types";
 import { ETypographyFontSize } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
 import { generateID } from "@/utils/funcs";
@@ -21,8 +21,14 @@ const UploadTab = () => {
         audio: YUP.mixed().required(),
     });
 
-    async function uploadSong(v: Omit<ISongCard, "id">, resetFormFunc: any) {
-        await local_UploadSong({ ...v, id: generateID() });
+    async function uploadSong(v: ISongCardFormData, resetFormFunc: any) {
+        await local_UploadSong({ 
+            ...v, 
+            id: generateID(), 
+            dateCreated: new Date().toString(),
+            isFavorite: false
+        });
+
         resetFormFunc();
     }
 

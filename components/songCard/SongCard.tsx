@@ -14,12 +14,19 @@ import { ISongCard } from "./types";
 const SongCard = (props: ISongCard) => {
     const router = useRouter();
     const [openModal, setOpenModal] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(props.isFavorite);
+
 
     function routeToSong() {
         router.replace(`/player/${props.id}`);
     }
 
     function closeModal() {
+        setOpenModal(false);
+    }
+
+    function handleDeletePress() {
+        props.onDelete ? props.onDelete(props.id) : null;
         setOpenModal(false);
     }
 
@@ -50,9 +57,9 @@ const SongCard = (props: ISongCard) => {
                     </Typography>
 
                     <Clutton 
-                        text="Add to favorites" 
+                        text={isFavorite ? "Remove from favorites" : "Add to favorites"} 
                         icon="heart" 
-                        borderRadiusMode={ECluttonBorderRadius.Cube} 
+                        borderRadiusMode={ECluttonBorderRadius.Cube}
                     />
                     <Clutton 
                         text="Edit song" 
@@ -64,6 +71,7 @@ const SongCard = (props: ISongCard) => {
                         theme={ECluttonTheme.Danger} 
                         icon="trash-can"
                         borderRadiusMode={ECluttonBorderRadius.Cube} 
+                        onPress={handleDeletePress}
                     />
                 </View>
             </MModal>

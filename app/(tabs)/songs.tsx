@@ -1,7 +1,7 @@
 import WordInput from "@/components/inputs/WordInput";
 import SongCard from "@/components/songCard/SongCard";
 import { ISongCard } from "@/components/songCard/types";
-import { local_GetSongs } from "@/utils/local";
+import { local_DeleteSong, local_GetSongs } from "@/utils/local";
 import { useFocusEffect } from "expo-router";
 import { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
@@ -12,7 +12,12 @@ const SongsTab = () => {
 
     useFocusEffect(() => {
         local_GetSongs().then(setSongs);
-    })
+    });
+
+    async function deleteSong(id: string) {
+        const res = await local_DeleteSong(id);
+        setSongs(res);
+    }
 
     return(
         <View>
@@ -27,7 +32,7 @@ const SongsTab = () => {
                 style={styles.songContainer}
                 contentContainerStyle={styles.songContentContainer}
                 data={songs.filter(x => x.title.startsWith(searchValue))}
-                renderItem={x => <SongCard {...x.item} />}
+                renderItem={x => <SongCard {...x.item} onDelete={deleteSong} />}
             />
         </View> 
     )

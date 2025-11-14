@@ -74,7 +74,6 @@ const SettingsTab = () => {
                 </Formik>
             </Card>
 
-
             <View style={styles.buttonContainer}>
                 <Clutton text="Log out" icon="logout" onPress={handleLogoutPress} />
                 <Clutton

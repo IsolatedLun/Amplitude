@@ -4,5 +4,11 @@ export interface ISongCard {
     author: string,
     
     image: string,
-    audio: string
+    audio: string,
+
+    dateCreated: string,
+    isFavorite: boolean,
+    onDelete?: (id: string) => void;
 }
+
+export type ISongCardFormData = Omit<ISongCard, "id" | "onDelete" | "dateCreated" | "isFavorite">;
