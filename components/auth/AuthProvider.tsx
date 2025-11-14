@@ -1,4 +1,4 @@
-import { local_getMockLoginUser } from "@/utils/local";
+import { local_ClearAuthToken, local_getMockLoginUser } from "@/utils/local";
 import React, { createContext, useState } from "react";
 import { IAuthUser, IAuthUserContext } from "./types";
 
@@ -18,6 +18,7 @@ const AuthProvider = ({ children } : { children: React.ReactNode }) => {
     }
 
     function logout() {
+        local_ClearAuthToken();
         setUser(null);
     }
     

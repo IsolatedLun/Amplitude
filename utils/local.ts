@@ -2,6 +2,7 @@ import { IAuthUser } from "@/components/auth/types";
 import { ISongCard, ISongCardFormData } from "@/components/songCard/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SecureStore from 'expo-secure-store';
+import { generateID } from "./funcs";
 
 // fetching/deleting/favoriting songs
 export async function local_GetSongs(): Promise<ISongCard[]> {
@@ -57,4 +58,16 @@ export async function local_getMockLoginUser(): Promise<IAuthUser> {
 
 export async function local_editMockUser(v: IAuthUser) {
     return await SecureStore.setItemAsync("user", JSON.stringify(v));
+}
+
+export function local_GetAuthToken() {
+    return SecureStore.getItemAsync("sessionToken");
+}
+
+export function local_CreateAuthToken() {    
+    return SecureStore.setItemAsync("sessionToken", generateID());
+}
+
+export function local_ClearAuthToken() {    
+    return SecureStore.deleteItemAsync("sessionToken");
 }
