@@ -44,6 +44,15 @@ export async function local_UploadSong(x: ISongCard): Promise<void> {
     return AsyncStorage.setItem("songs", JSON.stringify(res));
 }
 
+export async function local_UpdateSong(id: string, x: ISongCardFormData): Promise<void> {
+    const _res = await AsyncStorage.getItem("songs");
+    const res: ISongCard[] = _res ? JSON.parse(_res) : [];
+    const idx = res.findIndex(song => song.id === id);
+    res[idx] = { ...res[idx], ...x };
+    
+    return AsyncStorage.setItem("songs", JSON.stringify(res));
+}
+
 export async function local_ClearSongs() {
     AsyncStorage.removeItem("songs");
 }

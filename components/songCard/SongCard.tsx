@@ -30,6 +30,11 @@ const SongCard = (props: ISongCard) => {
         setOpenModal(false);
     }
 
+    function handleEditPress() {
+        setOpenModal(false);
+        router.replace(`/(tabs)/upload?editID=${props.id}`);
+    }
+
     return(
         <>
             <View style={styles.container}>
@@ -64,7 +69,8 @@ const SongCard = (props: ISongCard) => {
                     <Clutton 
                         text="Edit song" 
                         icon="pencil"
-                        borderRadiusMode={ECluttonBorderRadius.Cube} 
+                        borderRadiusMode={ECluttonBorderRadius.Cube}
+                        onPress={handleEditPress} 
                     />
                     <Clutton 
                         text="Delete song" 
