@@ -27,7 +27,7 @@ const LoginPage = () => {
                 login(mockUser).then(() => router.push("/(tabs)/songs"));
             }
         })();
-    });
+    })
 
     function handleSubmit(v: IAuthUser) {
         login(v)
