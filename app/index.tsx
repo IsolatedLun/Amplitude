@@ -28,7 +28,7 @@ export default function Index() {
 
       <View style={styles.buttonContainer}>
         <Clutton
-          text="Login" 
+            text="Login" 
             icon="login" 
             iconOrientation="row-reverse" 
             onPress={() => router.push("/auth/login")}
