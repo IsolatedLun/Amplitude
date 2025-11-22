@@ -1,5 +1,4 @@
 import Anchor from "@/components/anchor/Anchor";
-import { AuthUserContext } from "@/components/auth/AuthProvider";
 import { IAuthUser } from "@/components/auth/types";
 import Card from "@/components/card/Card";
 import { ECardBorderThicknessMode, ECardPaddingMode } from "@/components/card/types";
@@ -8,37 +7,18 @@ import CenterContainer from "@/components/containers/CenterContainer";
 import Icon from "@/components/icon/Icon";
 import { EIconSize, EIconTheme } from "@/components/icon/types";
 import WordInput from "@/components/inputs/WordInput";
-import { ETypographyFontSize, ETypographyTheme } from "@/components/typography/types";
+import { ETypographyFontSize } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
 import { USER_VALIDATION_SCHEMA } from "@/utils/global";
-import { local_CreateAuthToken, local_GetAuthToken, local_getMockLoginUser } from "@/utils/local";
-import { useFocusEffect, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { Formik } from "formik";
-import { useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
-const LoginPage = () => {
+const SignUpPage = () => {
     const router = useRouter();
-    const { login } = useContext(AuthUserContext)!;
-    const [loginError, setLoginError] = useState<string | null>(null);
-
-    useFocusEffect(() => {
-        (async() => {
-            const tok = await local_GetAuthToken();
-            if(tok) {
-                const mockUser = await local_getMockLoginUser();
-                login(mockUser).then(() => router.push("/(tabs)/songs"));
-            }
-        })();
-    });
 
     function handleSubmit(v: IAuthUser) {
-        login(v)
-            .then(async() => {
-                await local_CreateAuthToken();
-                router.push("/(tabs)/songs");
-            })
-            .catch(setLoginError)
+        
     }
     
     return(
@@ -57,7 +37,7 @@ const LoginPage = () => {
                         >
                             <View style={styles.titleContainer}>
                                 <Icon name="login" theme={EIconTheme.Primary} size={EIconSize.Navbar} />
-                                <Typography fontSize={ETypographyFontSize.Title}>Login</Typography>
+                                <Typography fontSize={ETypographyFontSize.Title}>Sign up</Typography>
                             </View>
                             <View style={styles.formContainer}>
                                 <WordInput 
@@ -81,18 +61,8 @@ const LoginPage = () => {
                             </View>
 
                             <View style={styles.loginSubmitContainer}>
-                                <Clutton text="Login" icon="login" onPress={submitForm} />
-                                {
-                                    loginError 
-                                    ? <Typography 
-                                    style={{ textAlign: "center" }}
-                                    theme={ETypographyTheme.Error}
-                                    >
-                                            { loginError }
-                                    </Typography>
-                                    : null
-                                }
-                                <Anchor text="Don't have an account?" href="./signup" />
+                                <Clutton text="Sign up" icon="plus" onPress={submitForm} />
+                                <Anchor text="Already have an account?" href="./login" />
                             </View>
                         </Card>
                     </CenterContainer>
@@ -119,4 +89,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default LoginPage;
+export default SignUpPage;

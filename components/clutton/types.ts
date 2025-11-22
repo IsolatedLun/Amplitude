@@ -1,5 +1,6 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { ComponentProps } from "react";
+import { StyleProp, ViewStyle } from "react-native";
 
 export enum ECluttonTheme { Primary, Danger };
 export enum ECluttonBorderRadius { Cube, Cylidner };
@@ -10,6 +11,7 @@ export interface IClutton {
 
     onPress?: () => void,
     theme?: ECluttonTheme,
+    style?: StyleProp<ViewStyle>,
     paddingMode?: ECluttonPaddding,
     paddingSize?: ECluttonPaddingSize,
     borderRadiusMode?: ECluttonBorderRadius,

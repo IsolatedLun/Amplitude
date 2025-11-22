@@ -3,8 +3,9 @@ import * as DocumentPicker from 'expo-document-picker';
 import { File, Paths } from "expo-file-system";
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Card from "../card/Card";
+import Clutton from '../clutton/Clutton';
 import Icon from '../icon/Icon';
 import { EIconSize, EIconTheme } from '../icon/types';
 import { ETypographyFontSize, ETypographyTheme } from '../typography/types';
@@ -15,6 +16,7 @@ import { EMediaInputMode, IMediaInput, TFilePickerAsset } from './types';
 const MediaInput = (props: IMediaInput) => {
     const [state, setState] = useState<string>("");
     const [fileState, setFileState] = useState<TFilePickerAsset | null>(null);
+    const [showPreview, setShowPreview] = useState(true);
 
     useEffect(() => {
         if(!props.value)
@@ -63,6 +65,17 @@ const MediaInput = (props: IMediaInput) => {
 
     return(
         <View style={styles.container}>
+            {
+                props.mode === EMediaInputMode.Image && fileState && showPreview
+                ? (
+                    <Image 
+                        source={{ uri: fileState?.uri }} 
+                        style={{ aspectRatio: "1", borderRadius: 12 }} 
+                    />
+                )
+                : null
+            }
+
             <TouchableOpacity onPress={handlePress}>
                 <Card style={styles.uploadContainer}>
                     <View style={styles.uploadPlaceholderContainer}>
@@ -83,6 +96,7 @@ const MediaInput = (props: IMediaInput) => {
                     }
                 </Card>
             </TouchableOpacity>
+
             { props.error ? 
                 <Typography
                     style={{ marginInlineStart: 8 }}
@@ -91,6 +105,18 @@ const MediaInput = (props: IMediaInput) => {
                 >
                     { capitalizeSentence(props.error) }
                 </Typography> 
+                : null
+            }
+
+            {
+                props.mode === EMediaInputMode.Image && fileState 
+                ? (
+                    <Clutton 
+                        text={showPreview ? "Close preview" : "Open Preview"}
+                        onPress={() => setShowPreview(prev => !prev)} 
+                        style={{ marginInlineStart: "auto" }} 
+                    />
+                )
                 : null
             }
         </View>

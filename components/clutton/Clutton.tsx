@@ -35,7 +35,9 @@ const Clutton = (props: IClutton) => {
                     flexDirection: props.iconOrientation ?? "row",
                     alignItems: "center",
                     justifyContent: "center",
-                    gap: 8
+                    gap: 8,
+
+                    ...props.style as any,
                 }}
             >
                 { props.icon ? <Icon name={props.icon} size={EIconSize.Button} /> : null }

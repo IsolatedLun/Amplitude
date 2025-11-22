@@ -28,6 +28,12 @@ export default function Index() {
 
       <View style={styles.buttonContainer}>
         <Clutton
+            text="Sign up" 
+            icon="plus"
+            iconOrientation="row-reverse" 
+            onPress={() => router.push("/auth/login")}
+        />
+        <Clutton
             text="Login" 
             icon="login" 
             iconOrientation="row-reverse" 

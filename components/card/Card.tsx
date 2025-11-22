@@ -8,10 +8,13 @@ const Card = (props: ICard) => {
     const { state: { themes } } = useContext(ColorSchemeContext)!;
     const borderThicknessMode: Record<ECardBorderThicknessMode, number> = {
         [ECardBorderThicknessMode.Default]: 2,
-        [ECardBorderThicknessMode.Thin]: 1
+        [ECardBorderThicknessMode.Thin]: 1,
+        [ECardBorderThicknessMode.None]: 0,
     };
     const paddingMode: Record<ECardPaddingMode, number> = {
-        [ECardPaddingMode.Default]: 12
+        [ECardPaddingMode.Default]: 12,
+        [ECardPaddingMode.Medium]: 24,
+        [ECardPaddingMode.Large]: 32
     }
     const borderRadiusMode: Record<ECardBorderRadiusMode, number> = {
         [ECardBorderRadiusMode.Bevel]: 8

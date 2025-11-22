@@ -37,8 +37,15 @@ const WordInput = (props: IWordInput) => {
             { 
             props.title ? 
                 <Typography 
-                    theme={props.error ? ETypographyTheme.Error : ETypographyTheme.Muted}>
-                        { props.title }
+                    theme={
+                        props.error 
+                        ? ETypographyTheme.Error 
+                        : isFocused 
+                            ? ETypographyTheme.Primary 
+                            : ETypographyTheme.Muted
+                    }
+                >
+                    { props.title }
                 </Typography> 
                 : null
             }

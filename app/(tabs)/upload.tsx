@@ -13,7 +13,7 @@ import { local_GetSong, local_UpdateSong, local_UploadSong } from "@/utils/local
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { Formik } from "formik";
 import { useCallback, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import * as YUP from "yup";
 
 const UploadTab = () => {
@@ -50,101 +50,103 @@ const UploadTab = () => {
     }
 
     return(
-        <Formik
-            validationSchema={songValidationSchema}
-            initialValues={{ title: "", author: "", image: "", audio: "" }}
-            onSubmit={(v, formik) => uploadSong(v, formik.resetForm)}
-        >
-            {
-                ({ handleChange, handleBlur, setFieldValue, submitForm, resetForm, values,  errors }) => {
-                    useFocusEffect(useCallback(() => {
-                        if(editID !== null) {
-                            local_GetSong(editID as string)
-                                .then(res => {
-                                    if(res !== null) {
-                                        const fields = ["title", "author", "image", "audio"];
-                                        fields.forEach(field => setFieldValue(field, (res as any)[field], false));
-                                        setSongToEdit(res);
-                                    }
-                                })
-                        }
-
-                        return () => resetForm()
-                    }, [editID]))
-
-                    return (
-                        <View style={styles.formContainer}>
-                            <View style={styles.titleContainer}>
-                                <Icon name="wifi" size={EIconSize.Navbar} theme={EIconTheme.Primary} />
-                                <Typography fontSize={ETypographyFontSize.Title}>
-                                    { editID ? "Edit Music" : "Upload Music" }
-                                </Typography>
-                            </View>
-
-                            <View style={styles.formInputContainer}>
-                                <WordInput
-                                    title="Title"
-                                    placeholder="Enter song title"
-                                    value={values.title}
-                                    error={errors.title}
-
-                                    onInput={handleChange("title")}
-                                    onBlur={handleBlur("title")}
-                                />
-
-                                <WordInput 
-                                    title="Author"
-                                    placeholder="Enter author's name"
-                                    value={values.author}
-                                    error={errors.author}
-
-                                    onInput={handleChange("author")}
-                                    onBlur={handleBlur("author")}
-                                />
-
-                                <MediaInput 
-                                    icon="image"
-                                    mode={EMediaInputMode.Image} 
-                                    value={values.image}
-                                    error={errors.image}
-                                    placeholder={`${editID ? "Change" : "Upload"} Image File`}
-                                    onInput={handleChange("image")} 
-                                />
-
-                                <MediaInput 
-                                    icon="volume-high"
-                                    mode={EMediaInputMode.Document} 
-                                    value={values.audio}
-                                    error={errors.audio}
-                                    placeholder={`${editID ? "Change" : "Upload"} Audio File`} 
-                                    onInput={handleChange("audio")} 
-                                />
-                            </View>
-
-                            {
-                                editID 
-                                ? (
-                                    <View style={styles.editButtonContainer}>
-                                        <Clutton 
-                                            text="Save changes" 
-                                            icon="update" 
-                                            onPress={() => editSong(values, resetForm)} 
-                                        />
-                                        <Clutton 
-                                            theme={ECluttonTheme.Danger}
-                                            text="Cancel" 
-                                            icon="cancel" 
-                                            onPress={() => cancelEditSong(resetForm)}
-                                        />
-                                    </View>
-                                )
-                                : <Clutton text="Submit" icon="upload" onPress={submitForm} />
+        <ScrollView>
+            <Formik
+                validationSchema={songValidationSchema}
+                initialValues={{ title: "", author: "", image: "", audio: "" }}
+                onSubmit={(v, formik) => uploadSong(v, formik.resetForm)}
+            >
+                {
+                    ({ handleChange, handleBlur, setFieldValue, submitForm, resetForm, values,  errors }) => {
+                        useFocusEffect(useCallback(() => {
+                            if(editID !== null) {
+                                local_GetSong(editID as string)
+                                    .then(res => {
+                                        if(res !== null) {
+                                            const fields = ["title", "author", "image", "audio"];
+                                            fields.forEach(field => setFieldValue(field, (res as any)[field], false));
+                                            setSongToEdit(res);
+                                        }
+                                    })
                             }
-                        </View>
-                    )
+
+                            return () => resetForm()
+                        }, [editID]))
+
+                        return (
+                            <View style={styles.formContainer}>
+                                <View style={styles.titleContainer}>
+                                    <Icon name="wifi" size={EIconSize.Navbar} theme={EIconTheme.Primary} />
+                                    <Typography fontSize={ETypographyFontSize.Title}>
+                                        { editID ? "Edit Music" : "Upload Music" }
+                                    </Typography>
+                                </View>
+
+                                <View style={styles.formInputContainer}>
+                                    <WordInput
+                                        title="Title"
+                                        placeholder="Enter song title"
+                                        value={values.title}
+                                        error={errors.title}
+
+                                        onInput={handleChange("title")}
+                                        onBlur={handleBlur("title")}
+                                    />
+
+                                    <WordInput 
+                                        title="Author"
+                                        placeholder="Enter author's name"
+                                        value={values.author}
+                                        error={errors.author}
+
+                                        onInput={handleChange("author")}
+                                        onBlur={handleBlur("author")}
+                                    />
+
+                                    <MediaInput 
+                                        icon="image"
+                                        mode={EMediaInputMode.Image} 
+                                        value={values.image}
+                                        error={errors.image}
+                                        placeholder={`${editID ? "Change" : "Upload"} Image File`}
+                                        onInput={handleChange("image")} 
+                                    />
+
+                                    <MediaInput 
+                                        icon="volume-high"
+                                        mode={EMediaInputMode.Document} 
+                                        value={values.audio}
+                                        error={errors.audio}
+                                        placeholder={`${editID ? "Change" : "Upload"} Audio File`} 
+                                        onInput={handleChange("audio")} 
+                                    />
+                                </View>
+
+                                {
+                                    editID 
+                                    ? (
+                                        <View style={styles.editButtonContainer}>
+                                            <Clutton 
+                                                text="Save changes" 
+                                                icon="update" 
+                                                onPress={() => editSong(values, resetForm)} 
+                                            />
+                                            <Clutton 
+                                                theme={ECluttonTheme.Danger}
+                                                text="Cancel" 
+                                                icon="cancel" 
+                                                onPress={() => cancelEditSong(resetForm)}
+                                            />
+                                        </View>
+                                    )
+                                    : <Clutton text="Submit" icon="upload" onPress={submitForm} />
+                                }
+                            </View>
+                        )
+                    }
                 }
-            }
-        </Formik>
+            </Formik>
+        </ScrollView>
     )
 };
 
