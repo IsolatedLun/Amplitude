@@ -24,7 +24,7 @@ const SongsTab = () => {
             <WordInput 
                 onInput={setSearchValue}
                 value={searchValue} 
-                placeholder="Search song..." 
+                placeholder="Search songs..." 
                 title=""
             />
 

@@ -31,7 +31,7 @@ export default function Index() {
             text="Sign up" 
             icon="plus"
             iconOrientation="row-reverse" 
-            onPress={() => router.push("/auth/login")}
+            onPress={() => router.push("/auth/signup")}
         />
         <Clutton
             text="Login" 

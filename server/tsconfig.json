@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "allowImportingTsExtensions": false,
+    "esModuleInterop": true,
+
+    "moduleResolution": "node",
+    "module": "CommonJS",
+    "strict": true,
+  },
+
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
