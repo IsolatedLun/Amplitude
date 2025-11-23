@@ -4,16 +4,17 @@ A simple music app made with expo + react native.
 ## Get started
 
 1. Install dependencies
+   Run `_init.bat`;
 
-   ```bash
-   npm install
-   ```
+2. Start app + server
+   Run `_run.bat`
 
-2. Start the app
+OR
 
-   ```bash
-   npx expo start
-   ```
+1. `[open cmd in root folder] => npm install && cd server && npm install && cd .. && npm run start`
+2. `[open cmd in root/server folder] => npm run dev`
+
+
 ### Features
 - Auth (mocked)
 - View + play song
