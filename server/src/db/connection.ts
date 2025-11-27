@@ -10,7 +10,7 @@ async function ping() {
     }
 }
 
-const URI = process.env.ATLAS_URI || "";
+const URI = process.env.MONGO_URI || "";
 const client = new MongoClient(URI, {
     serverApi: {
         version: ServerApiVersion.v1,

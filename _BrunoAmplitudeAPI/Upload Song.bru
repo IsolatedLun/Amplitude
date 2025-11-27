@@ -1,0 +1,33 @@
+meta {
+  name: Upload Song
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/songs
+  body: formUrlEncoded
+  auth: inherit
+}
+
+body:json {
+  {
+    "title": "song1",
+    "author": "author1",
+    "audio": ""
+  }
+}
+
+body:form-urlencoded {
+  rtret: erterter
+}
+
+body:multipart-form {
+  title: wow
+  author: adfsdf
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

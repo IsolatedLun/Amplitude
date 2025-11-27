@@ -3,10 +3,10 @@ A simple music app made with expo + react native.
 
 ## Get started
 
-1. Install dependencies
+1. Install dependencies:
    Run `_init.bat`;
 
-2. Start app + server
+2. Start app + server:
    Run `_run.bat`
 
 OR

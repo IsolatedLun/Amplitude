@@ -2,14 +2,15 @@ import Clutton from "@/components/clutton/Clutton";
 import { ECluttonTheme } from "@/components/clutton/types";
 import Icon from "@/components/icon/Icon";
 import { EIconSize, EIconTheme } from "@/components/icon/types";
+import ImageInput from "@/components/inputs/ImageInput";
 import MediaInput from "@/components/inputs/MediaInput";
 import { EMediaInputMode } from "@/components/inputs/types";
 import WordInput from "@/components/inputs/WordInput";
 import { ISongCard, ISongCardFormData } from "@/components/songCard/types";
 import { ETypographyFontSize } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
-import { generateID } from "@/utils/funcs";
-import { local_GetSong, local_UpdateSong, local_UploadSong } from "@/utils/local";
+import { SERVER_URL } from "@/utils/global";
+import { local_GetSong, local_UpdateSong } from "@/utils/local";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { Formik } from "formik";
 import { useCallback, useState } from "react";
@@ -23,19 +24,26 @@ const UploadTab = () => {
     const songValidationSchema = YUP.object<ISongCard>().shape({
         title: YUP.string().required(),
         author: YUP.string().required(),
-        image: YUP.mixed().required(),
-        audio: YUP.mixed().required(),
+        image: YUP.string().required(),
+        audio: YUP.string().required(),
     });
 
     async function uploadSong(v: ISongCardFormData, resetFormFunc: any) {
-        await local_UploadSong({ 
-            ...v, 
-            id: generateID(), 
-            dateCreated: new Date().toString(),
-            isFavorite: false
-        });
+        const data = new FormData();
+        data.append("file", { uri: v.image, name: "", type: "" } as any)
+        data.append("title", v.title)
+        
+        await fetch(SERVER_URL + "/songs", { method: "POST", body: data })
+            .then(x => console.log(x))
+            .catch(err => console.log(err))
+        // await local_UploadSong({ 
+        //     ...v, 
+        //     id: generateID(), 
+        //     dateCreated: new Date().toString(),
+        //     isFavorite: false
+        // });
 
-        cancelEditSong(resetFormFunc);
+        // cancelEditSong(resetFormFunc);
     }
 
     async function editSong(v: ISongCardFormData, resetFormFunc: any) {
@@ -103,9 +111,9 @@ const UploadTab = () => {
                                         onBlur={handleBlur("author")}
                                     />
 
-                                    <MediaInput 
+                                    <ImageInput 
                                         icon="image"
-                                        mode={EMediaInputMode.Image} 
+                                        mode={EMediaInputMode.Image}
                                         value={values.image}
                                         error={errors.image}
                                         placeholder={`${editID ? "Change" : "Upload"} Image File`}
