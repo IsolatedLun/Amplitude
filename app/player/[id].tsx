@@ -5,7 +5,7 @@ import { ISongCard } from "@/components/songCard/types";
 import SongPlayer from "@/components/songPlayer/SongPlayer";
 import { ETypographyFontSize, ETypographyTheme } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
-import { local_GetSong } from "@/utils/local";
+import { SERVER_URL } from "@/utils/global";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
@@ -16,7 +16,10 @@ const PlayerPage = () => {
     const router = useRouter();
 
     useEffect(() => {
-        local_GetSong(id as string).then(setSong);
+        fetch(SERVER_URL + "/songs/" + id, { method: "GET" })
+            .then((res) => res.json())
+            .then(setSong)
+            .catch(err => console.log(err))
     }, [])
 
     return !song ? (

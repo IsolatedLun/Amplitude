@@ -36,14 +36,6 @@ const UploadTab = () => {
         await fetch(SERVER_URL + "/songs", { method: "POST", body: data })
             .then(x => console.log(x))
             .catch(err => console.log(err))
-        // await local_UploadSong({ 
-        //     ...v, 
-        //     id: generateID(), 
-        //     dateCreated: new Date().toString(),
-        //     isFavorite: false
-        // });
-
-        // cancelEditSong(resetFormFunc);
     }
 
     async function editSong(v: ISongCardFormData, resetFormFunc: any) {
@@ -131,7 +123,7 @@ const UploadTab = () => {
                                 </View>
 
                                 {
-                                    editID 
+                                    editID
                                     ? (
                                         <View style={styles.editButtonContainer}>
                                             <Clutton 

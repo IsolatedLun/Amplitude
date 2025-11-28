@@ -1,3 +1,4 @@
+import { ISongPreview } from "@/api/types";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
@@ -9,16 +10,15 @@ import HorizontalLine from "../misc/horizontalLine/HorizontalLine";
 import MModal from "../modal/MModal";
 import { ETypographyFontSize, ETypographyTheme } from "../typography/types";
 import Typography from "../typography/Typography";
-import { ISongCard } from "./types";
 
-const SongCard = (props: ISongCard) => {
+const SongCard = (props: ISongPreview) => {
     const router = useRouter();
     const [openModal, setOpenModal] = useState(false);
-    const [isFavorite, setIsFavorite] = useState(props.isFavorite);
+    const [isFavorite, setIsFavorite] = useState(false);
 
 
     function routeToSong() {
-        router.replace(`/player/${props.id}`);
+        router.replace(`/player/${props._id}`);
     }
 
     function closeModal() {
@@ -26,13 +26,12 @@ const SongCard = (props: ISongCard) => {
     }
 
     function handleDeletePress() {
-        props.onDelete ? props.onDelete(props.id) : null;
         setOpenModal(false);
     }
 
     function handleEditPress() {
         setOpenModal(false);
-        router.replace(`/(tabs)/upload?editID=${props.id}`);
+        router.replace(`/(tabs)/upload?editID=${props._id}`);
     }
 
     return(

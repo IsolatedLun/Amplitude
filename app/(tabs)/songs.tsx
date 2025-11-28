@@ -1,25 +1,29 @@
+import { SongAPI_FetchSongs } from "@/api/songApi";
+import { ISongPreview } from "@/api/types";
+import ErrorContainer from "@/components/containers/ErrorContainer";
+import LoadingContainer from "@/components/containers/LoadingContainer";
 import WordInput from "@/components/inputs/WordInput";
 import SongCard from "@/components/songCard/SongCard";
-import { ISongCard } from "@/components/songCard/types";
-import { local_DeleteSong, local_GetSongs } from "@/utils/local";
+import { useGetRequest } from "@/hooks/request";
 import { useFocusEffect } from "expo-router";
 import { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
 const SongsTab = () => {
-    const [songs, setSongs] = useState<ISongCard[]>([]);
+    const { data, loading, error, retryFn } = useGetRequest<ISongPreview[]>(SongAPI_FetchSongs, []);
     const [searchValue, setSearchValue] = useState("");
 
     useFocusEffect(() => {
-        local_GetSongs().then(setSongs);
-    });
+        if(data.length == 0)
+            retryFn();
+    })
 
-    async function deleteSong(id: string) {
-        const res = await local_DeleteSong(id);
-        setSongs(res);
-    }
-
-    return(
+    return loading 
+    ? <LoadingContainer />
+    : error
+    ? <ErrorContainer retryFn={retryFn} />
+    : (
+         (
         <View>
             <WordInput 
                 onInput={setSearchValue}
@@ -31,10 +35,11 @@ const SongsTab = () => {
             <FlatList 
                 style={styles.songContainer}
                 contentContainerStyle={styles.songContentContainer}
-                data={songs.filter(x => x.title.startsWith(searchValue))}
-                renderItem={x => <SongCard {...x.item} onDelete={deleteSong} />}
+                data={data.filter(x => x.title.startsWith(searchValue))}
+                renderItem={x => <SongCard {...x.item} />}
             />
-        </View> 
+        </View>
+    )
     )
 };
 

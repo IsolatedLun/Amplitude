@@ -1,5 +1,5 @@
 export interface ISongCard {
-    id: string,
+    _id: string,
     title: string,
     author: string,
     
@@ -11,4 +11,4 @@ export interface ISongCard {
     onDelete?: (id: string) => void;
 }
 
-export type ISongCardFormData = Omit<ISongCard, "id" | "onDelete" | "dateCreated" | "isFavorite">;
+export type ISongCardFormData = Omit<ISongCard, "_id" | "onDelete" | "dateCreated" | "isFavorite">;

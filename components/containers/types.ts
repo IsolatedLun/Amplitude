@@ -6,3 +6,8 @@ export interface ICenterContainer {
     alignCenter?: boolean,
     style?: StyleProp<ViewStyle>
 }
+
+export interface IErrorContainer {
+    retryFn?: () => void,
+    goBackFn?: () => void
+}

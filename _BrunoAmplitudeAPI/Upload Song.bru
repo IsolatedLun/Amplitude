@@ -6,7 +6,7 @@ meta {
 
 post {
   url: http://localhost:3000/songs
-  body: formUrlEncoded
+  body: multipartForm
   auth: inherit
 }
 
@@ -23,8 +23,10 @@ body:form-urlencoded {
 }
 
 body:multipart-form {
-  title: wow
-  author: adfsdf
+  title: Montagem Miaw
+  author: montagem
+  audio: @file(C:\Users\user\Downloads\Montagem Miau.mp3)
+  image: @file(C:\Users\user\Pictures\Screenshots\backgroundDontDelete.png)
 }
 
 settings {
