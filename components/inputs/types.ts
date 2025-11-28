@@ -4,7 +4,7 @@ import { ImagePickerAsset } from "expo-image-picker"
 import { ComponentProps } from "react"
 
 export enum EWordInputTheme { Primary };
-export enum EWordInputBorderRadius { Bevel };
+export enum EWordInputBorderRadius { Cube };
 export enum EWordInputBorderThickness { Default, Thin };
 export interface IWordInput {
     title: string,

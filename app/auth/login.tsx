@@ -6,9 +6,9 @@ import { ECardBorderThicknessMode, ECardPaddingMode } from "@/components/card/ty
 import Clutton from "@/components/clutton/Clutton";
 import CenterContainer from "@/components/containers/CenterContainer";
 import Icon from "@/components/icon/Icon";
-import { EIconSize, EIconTheme } from "@/components/icon/types";
+import { EIcon_Size, EIcon_Theme } from "@/components/icon/types";
 import WordInput from "@/components/inputs/WordInput";
-import { ETypographyFontSize, ETypographyTheme } from "@/components/typography/types";
+import { ETypography_FontSize, ETypography_Theme } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
 import { USER_VALIDATION_SCHEMA } from "@/utils/global";
 import { local_CreateAuthToken, local_GetAuthToken, local_getMockLoginUser } from "@/utils/local";
@@ -56,8 +56,10 @@ const LoginPage = () => {
                             paddingMode={ECardPaddingMode.Large}
                         >
                             <View style={styles.titleContainer}>
-                                <Icon name="login" theme={EIconTheme.Primary} size={EIconSize.Navbar} />
-                                <Typography fontSize={ETypographyFontSize.Title}>Login</Typography>
+                                <Icon name="login" theme={EIcon_Theme.Primary} size={EIcon_Size.Huge} />
+                                <Typography fontSize={ETypography_FontSize.Title}>
+                                    Login
+                                </Typography>
                             </View>
                             <View style={styles.formContainer}>
                                 <WordInput 
@@ -84,12 +86,14 @@ const LoginPage = () => {
                                 <Clutton text="Login" icon="login" onPress={submitForm} />
                                 {
                                     loginError 
-                                    ? <Typography 
-                                    style={{ textAlign: "center" }}
-                                    theme={ETypographyTheme.Error}
-                                    >
+                                    ? (
+                                        <Typography 
+                                            style={{ textAlign: "center" }}
+                                            theme={ETypography_Theme.Error}
+                                        >
                                             { loginError }
-                                    </Typography>
+                                        </Typography>
+                                    )
                                     : null
                                 }
                                 <Anchor text="Don't have an account?" href="./signup" />

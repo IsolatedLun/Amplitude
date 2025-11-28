@@ -1,13 +1,13 @@
 import Clutton from "@/components/clutton/Clutton";
 import { ECluttonTheme } from "@/components/clutton/types";
 import Icon from "@/components/icon/Icon";
-import { EIconSize, EIconTheme } from "@/components/icon/types";
+import { EIcon_Size, EIcon_Theme } from "@/components/icon/types";
 import ImageInput from "@/components/inputs/ImageInput";
 import MediaInput from "@/components/inputs/MediaInput";
 import { EMediaInputMode } from "@/components/inputs/types";
 import WordInput from "@/components/inputs/WordInput";
 import { ISongCard, ISongCardFormData } from "@/components/songCard/types";
-import { ETypographyFontSize } from "@/components/typography/types";
+import { ETypography_FontSize } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
 import { SERVER_URL } from "@/utils/global";
 import { local_GetSong, local_UpdateSong } from "@/utils/local";
@@ -76,8 +76,8 @@ const UploadTab = () => {
                         return (
                             <View style={styles.formContainer}>
                                 <View style={styles.titleContainer}>
-                                    <Icon name="wifi" size={EIconSize.Navbar} theme={EIconTheme.Primary} />
-                                    <Typography fontSize={ETypographyFontSize.Title}>
+                                    <Icon name="wifi" size={EIcon_Size.Huge} theme={EIcon_Theme.Primary} />
+                                    <Typography fontSize={ETypography_FontSize.Title}>
                                         { editID ? "Edit Music" : "Upload Music" }
                                     </Typography>
                                 </View>

@@ -3,23 +3,22 @@ import { useContext, useEffect, useState } from "react";
 import { TextInput, View } from "react-native";
 import { ColorSchemeContext } from "../scheme/ColorSchemeProvider";
 import { ThemeSpec } from "../scheme/types";
-import { ETypographyFontSize, ETypographyTheme } from "../typography/types";
+import { ETypography_FontSize, ETypography_Theme } from "../typography/types";
 import Typography from "../typography/Typography";
 import { EWordInputBorderRadius, EWordInputBorderThickness, EWordInputTheme, IWordInput } from "./types";
 
 const WordInput = (props: IWordInput) => {
-    const { state: { colors, themes } } = useContext(ColorSchemeContext)!;
+    const { state: { colors, themes, styling } } = useContext(ColorSchemeContext)!;
     const [isFocused, setIsFocused] = useState(false);
     const [themeState, setThemeState] = useState(colors.textTheme);
-    
     
     const _themes: Record<EWordInputTheme, ThemeSpec> = {
         [EWordInputTheme.Primary]: themes.inputPrimary
     }
-    const borderRadius: Record<EWordInputBorderRadius, number> = {
-        [EWordInputBorderRadius.Bevel]: 8,
+    const _borderRadius: Record<EWordInputBorderRadius, number> = {
+        [EWordInputBorderRadius.Cube]: styling.borderRadius.cubeRadius,
     }
-    const borderThickness: Record<EWordInputBorderThickness, number> = {
+    const _borderThickness: Record<EWordInputBorderThickness, number> = {
         [EWordInputBorderThickness.Default]: 2,
         [EWordInputBorderThickness.Thin]: 1
     }
@@ -39,10 +38,10 @@ const WordInput = (props: IWordInput) => {
                 <Typography 
                     theme={
                         props.error 
-                        ? ETypographyTheme.Error 
+                        ? ETypography_Theme.Error 
                         : isFocused 
-                            ? ETypographyTheme.Primary 
-                            : ETypographyTheme.Muted
+                            ? ETypography_Theme.Primary 
+                            : ETypography_Theme.Muted
                     }
                 >
                     { props.title }
@@ -55,8 +54,8 @@ const WordInput = (props: IWordInput) => {
                     backgroundColor: _themes[props.theme ?? EWordInputTheme.Primary].backgroundColor,
                     borderColor: themeState,
                     paddingInlineStart: 16,
-                    borderRadius: borderRadius[props.borderRadiusMode ?? EWordInputBorderRadius.Bevel],
-                    borderWidth: borderThickness[props.borderThicknessMode ?? EWordInputBorderThickness.Default]
+                    borderRadius: _borderRadius[props.borderRadiusMode ?? EWordInputBorderRadius.Cube],
+                    borderWidth: _borderThickness[props.borderThicknessMode ?? EWordInputBorderThickness.Default]
                 }}
 
                 value={props.value}
@@ -73,8 +72,8 @@ const WordInput = (props: IWordInput) => {
             { 
             props.error ? 
                 <Typography 
-                    theme={ETypographyTheme.Error} 
-                    fontSize={ETypographyFontSize.Small}
+                    theme={ETypography_Theme.Error} 
+                    fontSize={ETypography_FontSize.Small}
                     style={{ marginInlineStart: 8 }}>
                         { capitalizeSentence(props.error) }
                 </Typography> 

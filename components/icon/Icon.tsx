@@ -1,29 +1,33 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useContext } from "react";
 import { ColorSchemeContext } from "../scheme/ColorSchemeProvider";
-import { EIconSize, EIconTheme, IIcon } from "./types";
+import { EIcon_Size, EIcon_Theme, IIcon } from "./types";
 
 const Icon = (props: IIcon) => {
-    const { state: { colors, themes } } = useContext(ColorSchemeContext)!;
-    const _themes: Record<EIconTheme, string> = {
-        [EIconTheme.Default]: colors.screenText,
-        [EIconTheme.Primary]: colors.textTheme,
-        [EIconTheme.Muted]: colors.textMuted
+    const { state: { colors, styling } } = useContext(ColorSchemeContext)!;
+    const _themes: Record<EIcon_Theme, string> = {
+        [EIcon_Theme.Default]: colors.screenText,
+        [EIcon_Theme.Primary]: colors.textTheme,
+        [EIcon_Theme.Muted]: colors.textMuted
     };
-    const sizes: Record<EIconSize, number> = {
-        [EIconSize.Default]: 16,
-        [EIconSize.Button]: 18,
-        [EIconSize.Tab]: 24,
-        [EIconSize.Navbar]: 32,
-        [EIconSize.Huge]: 81
+    const _sizes: Record<EIcon_Size, number> = {
+        [EIcon_Size.Default]: styling.iconSize.default,
+        
+        [EIcon_Size.Small]: styling.iconSize.small,
+        [EIcon_Size.Medium]: styling.iconSize.medium,
+        [EIcon_Size.Large]: styling.iconSize.large,
+        [EIcon_Size.Huge]: styling.iconSize.huge,
+        [EIcon_Size.Gigantic]: styling.iconSize.gigantic,
+        
+        [EIcon_Size.Page]: styling.iconSize.page
     };
 
     return(
         <MaterialCommunityIcons 
             style={{ ...props.style as any }}
             name={props.name}
-            color={_themes[props.theme ?? EIconTheme.Default]}
-            size={sizes[props.size ?? EIconSize.Default]}
+            color={_themes[props.theme ?? EIcon_Theme.Default]}
+            size={_sizes[props.size ?? EIcon_Size.Default]}
         />
     )
 };

@@ -5,9 +5,9 @@ import { ECardBorderThicknessMode, ECardPaddingMode } from "@/components/card/ty
 import Clutton from "@/components/clutton/Clutton";
 import CenterContainer from "@/components/containers/CenterContainer";
 import Icon from "@/components/icon/Icon";
-import { EIconSize, EIconTheme } from "@/components/icon/types";
+import { EIcon_Size, EIcon_Theme } from "@/components/icon/types";
 import WordInput from "@/components/inputs/WordInput";
-import { ETypographyFontSize } from "@/components/typography/types";
+import { ETypography_FontSize } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
 import { USER_VALIDATION_SCHEMA } from "@/utils/global";
 import { useRouter } from "expo-router";
@@ -36,8 +36,8 @@ const SignUpPage = () => {
                             paddingMode={ECardPaddingMode.Large}
                         >
                             <View style={styles.titleContainer}>
-                                <Icon name="login" theme={EIconTheme.Primary} size={EIconSize.Navbar} />
-                                <Typography fontSize={ETypographyFontSize.Title}>Sign up</Typography>
+                                <Icon name="login" theme={EIcon_Theme.Primary} size={EIcon_Size.Huge} />
+                                <Typography fontSize={ETypography_FontSize.Title}>Sign up</Typography>
                             </View>
                             <View style={styles.formContainer}>
                                 <WordInput 

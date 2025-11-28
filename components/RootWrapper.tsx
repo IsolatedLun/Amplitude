@@ -8,14 +8,15 @@ import { ColorSchemeContext } from "./scheme/ColorSchemeProvider";
 
 SplashScreen.preventAutoHideAsync();
 const RootWrapper = () => {
-    const { state: { colors } } = useContext(ColorSchemeContext)!;
-    const { user } = useContext(AuthUserContext)!;
-    const insets = useSafeAreaInsets();
     const [loaded] = useFonts({
         "FontRegular": require("../assets/fonts/UbuntuRegular.ttf"),
         "FontBold": require("../assets/fonts/UbuntuBold.ttf"),
         ...MaterialCommunityIcons.font
     });
+
+    const { state: { colors, styling } } = useContext(ColorSchemeContext)!;
+    const { user } = useContext(AuthUserContext)!;
+    const insets = useSafeAreaInsets();
 
     useEffect(() => {
         SplashScreen.hideAsync();
@@ -27,22 +28,21 @@ const RootWrapper = () => {
                 headerShown: false,
                 contentStyle: {
                     backgroundColor: colors.screenBackground,
-                    paddingBlockStart: insets.top + 8,
-                    paddingBlockEnd: insets.bottom + 8,
-                    paddingInline: (insets.left + insets.right) + 16
+                    paddingBlockStart: insets.top + styling.screen.paddingTop,
+                    paddingBlockEnd: insets.bottom + styling.screen.paddingBottom,
+                    paddingInline: (insets.left + insets.right) + styling.screen.paddingInline
                 }
             }}
             initialRouteName='index'
         >
             <Stack.Screen name="index" />
+
             <Stack.Protected guard={user === null}>
                 <Stack.Screen name="auth/login" />
             </Stack.Protected>
-
             <Stack.Protected guard={user !== null}>
                 <Stack.Screen name="(tabs)" />
             </Stack.Protected>
-
         </Stack>
     )
 };

@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import Clutton from "../clutton/Clutton";
-import { ETypographyFontSize, ETypographyTheme } from "../typography/types";
+import { ETypography_FontSize, ETypography_Theme } from "../typography/types";
 import Typography from "../typography/Typography";
 import CenterContainer from "./CenterContainer";
 import { IErrorContainer } from "./types";
@@ -10,8 +10,8 @@ const ErrorContainer = (props: IErrorContainer) => {
         <CenterContainer style={styles.container}>
             <Typography 
                 style={{ textAlign: "center" }} 
-                fontSize={ETypographyFontSize.Title}
-                theme={ETypographyTheme.Error}
+                fontSize={ETypography_FontSize.Title}
+                theme={ETypography_Theme.Error}
             >
                 Something went wrong
             </Typography>

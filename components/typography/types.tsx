@@ -1,18 +1,36 @@
-import { StyleProp, TextStyle } from "react-native";
+import { StyleProp, TextProps, TextStyle } from "react-native";
 
-export enum ETypographyTheme { Default, Primary, Error, Muted };
+export enum ETypography_Theme { 
+    Default, 
+    Primary, 
+    Error, 
+    Muted 
+};
+export enum ETypography_FontType { 
+    Regular, 
+    Bold 
+};
+export enum ETypography_FontSize { 
+    Default, 
+    
+    Small, 
+    Medium, 
+    Large, 
+    Huge,
+    Gigantic, 
 
-export enum ETypographyFont { Regular, Bold };
-export enum ETypographyFontSize { Small, Default, Button, Title, Huge };
-export type TTypographysFontFamily = "FontRegular" | "FontBold";
+    Title
+};
+
+export type TTypography_FontFamily = "FontRegular" | "FontBold";
 export interface ITypography {
     children: React.ReactNode,
     
-
+    fontSize?: ETypography_FontSize,
+    fontType?: ETypography_FontType,
+    theme?: ETypography_Theme,
     center?: boolean,
-    numberofLines?: number,
-    theme?: ETypographyTheme,
-    fontType?: ETypographyFont,
-    fontSize?: ETypographyFontSize,
+    
+    textProps?: TextProps,
     style?: StyleProp<TextStyle>
 }

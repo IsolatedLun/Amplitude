@@ -1,13 +1,22 @@
 import { StyleSheet, View } from "react-native";
-import { ETypographyTheme } from "../typography/types";
+import { ETypography_Theme } from "../typography/types";
 import Typography from "../typography/Typography";
 import { IFilePickerAssetProps } from "./types";
 
 const MediaInputFileDetails = (props: IFilePickerAssetProps) => {
     return(
         <View style={styles.container}>
-            <Typography theme={ETypographyTheme.Muted} numberofLines={1}>Name: { props.name }</Typography>
-            <Typography theme={ETypographyTheme.Muted}>Size: { props.size }Mb</Typography>
+            <Typography 
+                textProps={{ numberOfLines: 2 }}
+                theme={ETypography_Theme.Muted}
+            >
+                Name: { props.name }
+            </Typography>
+            <Typography 
+                theme={ETypography_Theme.Muted}
+            >
+                    Size: { props.size }Mb
+            </Typography>
         </View>
     )
 };

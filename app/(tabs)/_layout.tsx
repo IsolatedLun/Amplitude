@@ -1,6 +1,6 @@
 import { AuthUserContext } from "@/components/auth/AuthProvider";
 import Icon from "@/components/icon/Icon";
-import { EIconSize, EIconTheme } from "@/components/icon/types";
+import { EIcon_Size, EIcon_Theme } from "@/components/icon/types";
 import Navbar from "@/components/navbar/Navbar";
 import { ColorSchemeContext } from "@/components/scheme/ColorSchemeProvider";
 import { IColorSchemeValue } from "@/components/scheme/types";
@@ -14,11 +14,11 @@ function constructTab(theme: IColorSchemeValue, props: ITab) {
             title: props.title,
             tabBarInactiveTintColor: theme.colors.textMuted,
             tabBarActiveTintColor: theme.colors.textTheme,
-            tabBarIcon: ({ focused, color }) => (
+            tabBarIcon: ({ focused }) => (
                 <Icon 
                     name={focused ? (props.activeIcon ?? props.icon) : props.icon}
-                    theme={focused ? EIconTheme.Primary : EIconTheme.Muted}
-                    size={EIconSize.Tab}
+                    theme={focused ? EIcon_Theme.Primary : EIcon_Theme.Muted}
+                    size={EIcon_Size.Medium}
                 />
             )
         }} />

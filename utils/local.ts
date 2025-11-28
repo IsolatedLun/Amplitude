@@ -16,20 +16,20 @@ export async function local_GetSongsByIDs(ids: string[]): Promise<ISongCard[]> {
     const _res = await AsyncStorage.getItem("songs");
     const res: ISongCard[] = _res ? JSON.parse(_res) : [];
     
-    return res.filter(x => ids.includes(x.id));
+    return res.filter(x => ids.includes(x._id));
 }
 
 export async function local_GetSong(id: string): Promise<ISongCard | null> {
     const _res = await AsyncStorage.getItem("songs");
     const res: ISongCard[] = _res ? JSON.parse(_res) : [];
     
-    return res.find(x => x.id === id) ?? null;
+    return res.find(x => x._id === id) ?? null;
 }
 
 export async function local_DeleteSong(id: string): Promise<ISongCard[]> {
     const _res = await AsyncStorage.getItem("songs");
     const res: ISongCard[] = _res ? JSON.parse(_res) : [];
-    const filtered = res.filter(x => x.id !== id);
+    const filtered = res.filter(x => x._id !== id);
     
     await AsyncStorage.setItem("songs", JSON.stringify(filtered));
     return filtered; 
@@ -47,7 +47,7 @@ export async function local_UploadSong(x: ISongCard): Promise<void> {
 export async function local_UpdateSong(id: string, x: ISongCardFormData): Promise<void> {
     const _res = await AsyncStorage.getItem("songs");
     const res: ISongCard[] = _res ? JSON.parse(_res) : [];
-    const idx = res.findIndex(song => song.id === id);
+    const idx = res.findIndex(song => song._id === id);
     res[idx] = { ...res[idx], ...x };
     
     return AsyncStorage.setItem("songs", JSON.stringify(res));

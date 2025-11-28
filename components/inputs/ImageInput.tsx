@@ -6,8 +6,8 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Card from "../card/Card";
 import Clutton from '../clutton/Clutton';
 import Icon from '../icon/Icon';
-import { EIconSize, EIconTheme } from '../icon/types';
-import { ETypographyFontSize, ETypographyTheme } from '../typography/types';
+import { EIcon_Size, EIcon_Theme } from '../icon/types';
+import { ETypography_FontSize, ETypography_Theme } from '../typography/types';
 import Typography from "../typography/Typography";
 import MediaInputFileDetails from './MediaInputDetails';
 import { IMediaInput, TFilePickerAsset } from './types';
@@ -66,10 +66,10 @@ const ImageInput = (props: IMediaInput) => {
                     <View style={styles.uploadPlaceholderContainer}>
                         <Icon 
                             name={props.icon ?? "file"} 
-                            size={EIconSize.Tab} 
-                            theme={EIconTheme.Muted} 
+                            size={EIcon_Size.Medium} 
+                            theme={EIcon_Theme.Muted} 
                         />
-                        <Typography theme={ETypographyTheme.Muted}>
+                        <Typography theme={ETypography_Theme.Muted}>
                             { props.placeholder }
                         </Typography>
                     </View>
@@ -85,8 +85,8 @@ const ImageInput = (props: IMediaInput) => {
             { props.error ? 
                 <Typography
                     style={{ marginInlineStart: 8 }}
-                    fontSize={ETypographyFontSize.Small}
-                    theme={ETypographyTheme.Error}
+                    fontSize={ETypography_FontSize.Small}
+                    theme={ETypography_Theme.Error}
                 >
                     { capitalizeSentence(props.error) }
                 </Typography> 

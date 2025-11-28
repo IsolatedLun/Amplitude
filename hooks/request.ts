@@ -13,7 +13,6 @@ export function useGetRequest<T>(fetchFn: () => Promise<T>, defaultValue: T): IR
     const [loading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    console.log("called")
     const callback = useCallback(() => {
         setIsLoading(true);
         setError(null);

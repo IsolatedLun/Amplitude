@@ -3,26 +3,36 @@ import { useContext } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { ColorSchemeContext } from "../scheme/ColorSchemeProvider";
 import { ThemeSpec } from "../scheme/types";
-import { EIconButtonBorderRadiusMode, EIconButtonPaddingMode, EIconButtonSize, EIconButtonTheme, IIconButton } from "./types";
+import {
+    EIconButton_BorderRadiusMode,
+    EIconButton_PaddingMode,
+    EIconButton_Size,
+    EIconButton_Theme,
+    IIconButton
+} from "./types";
 
 const IconButton = (props: IIconButton) => {
-    const { state: { colors, themes } } = useContext(ColorSchemeContext)!;
-    const paddingMode: Record<EIconButtonPaddingMode, number> = {
-        [EIconButtonPaddingMode.Default]: 12
+    const { state: { colors, themes, styling } } = useContext(ColorSchemeContext)!;
+    const paddingMode: Record<EIconButton_PaddingMode, number> = {
+        [EIconButton_PaddingMode.Default]: 12
     };
-    const borderRadiusMode: Record<EIconButtonBorderRadiusMode, number> = {
-        [EIconButtonBorderRadiusMode.Bevel]: 8,
-        [EIconButtonBorderRadiusMode.Round]: 999
+    const borderRadiusMode: Record<EIconButton_BorderRadiusMode, number> = {
+        [EIconButton_BorderRadiusMode.Bevel]: styling.borderRadius.cubeRadius,
+        [EIconButton_BorderRadiusMode.Round]: 999
     }
-    const _themes: Record<EIconButtonTheme, ThemeSpec> = {
-        [EIconButtonTheme.Default]: themes.buttonPrimary,
-        [EIconButtonTheme.Grayscale]: themes.iconButtonGrayscale,
-        [EIconButtonTheme.Transparent]: { backgroundColor: "transparent", color: colors.screenText }
+    const _themes: Record<EIconButton_Theme, ThemeSpec> = {
+        [EIconButton_Theme.Default]: themes.buttonPrimary,
+        [EIconButton_Theme.Grayscale]: themes.iconButtonGrayscale,
+        [EIconButton_Theme.Transparent]: { backgroundColor: "transparent", color: colors.screenText }
     }
-    const size: Record<EIconButtonSize, number> = {
-        [EIconButtonSize.Default]: 26,
-        [EIconButtonSize.Medium]: 32,
-        [EIconButtonSize.Large]: 44
+    const size: Record<EIconButton_Size, number> = {
+        [EIconButton_Size.Default]: styling.iconButtonSize.default,
+        
+        [EIconButton_Size.Small]: styling.iconButtonSize.small,
+        [EIconButton_Size.Medium]: styling.iconButtonSize.medium,
+        [EIconButton_Size.Large]: styling.iconButtonSize.large,
+        [EIconButton_Size.Huge]: styling.iconButtonSize.huge,
+        [EIconButton_Size.Gigantic]: styling.iconButtonSize.gigantic
     }
 
     return(
@@ -30,14 +40,14 @@ const IconButton = (props: IIconButton) => {
             <View
                 style={{
                     alignItems: "center",
-                    borderRadius: borderRadiusMode[props.borderRadiusMode ?? EIconButtonBorderRadiusMode.Round],
-                    padding: paddingMode[props.paddingMode ?? EIconButtonPaddingMode.Default],
-                    backgroundColor: _themes[props.theme ?? EIconButtonTheme.Default].backgroundColor
+                    borderRadius: borderRadiusMode[props.borderRadiusMode ?? EIconButton_BorderRadiusMode.Round],
+                    padding: paddingMode[props.paddingMode ?? EIconButton_PaddingMode.Default],
+                    backgroundColor: _themes[props.theme ?? EIconButton_Theme.Default].backgroundColor
                 }}
             >
                 <MaterialCommunityIcons
-                    color={_themes[props.theme ?? EIconButtonTheme.Default].color ?? colors.screenText}
-                    size={size[props.size ?? EIconButtonSize.Default]}
+                    color={_themes[props.theme ?? EIconButton_Theme.Default].color ?? colors.screenText}
+                    size={size[props.size ?? EIconButton_Size.Default]}
                     name={props.name}
                 />
             </View>

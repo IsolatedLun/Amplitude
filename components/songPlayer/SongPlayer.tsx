@@ -6,11 +6,11 @@ import { useContext } from 'react';
 import { Image, StyleSheet, View } from "react-native";
 import CenterContainer from "../containers/CenterContainer";
 import IconButton from '../iconButton/IconButton';
-import { EIconButtonSize, EIconButtonTheme } from '../iconButton/types';
+import { EIconButton_Size, EIconButton_Theme } from '../iconButton/types';
 import { ColorSchemeContext } from '../scheme/ColorSchemeProvider';
 import { ISongCard } from "../songCard/types";
 import Typography from "../typography/Typography";
-import { ETypographyFontSize, ETypographyTheme } from '../typography/types';
+import { ETypography_FontSize, ETypography_Theme } from '../typography/types';
 
 const SongPlayer = (props: ISongCard) => {
     const router = useRouter();
@@ -48,20 +48,25 @@ const SongPlayer = (props: ISongCard) => {
                 <View style={styles.upperControlsContainer}>
                     <IconButton 
                         name="arrow-left"
-                        theme={EIconButtonTheme.Transparent}
+                        theme={EIconButton_Theme.Transparent}
                         onPress={handleGoBack}
                     />
                     <IconButton 
                         name="dots-vertical"
-                        theme={EIconButtonTheme.Transparent}
+                        theme={EIconButton_Theme.Transparent}
                         onPress={() => null}
                     />
                 </View>
                 <View style={styles.contentContainer}>
                     <Image source={{ uri: props.image }} style={styles.thumbnailImage} />
                     <View style={styles.contentTextContainer}>
-                        <Typography numberofLines={2} fontSize={ETypographyFontSize.Title}>{ props.title }</Typography>
-                        <Typography theme={ETypographyTheme.Muted}>{ props.author }</Typography>
+                        <Typography 
+                            fontSize={ETypography_FontSize.Title}
+                            textProps={{ numberOfLines: 2 }}
+                        >
+                                { props.title }
+                        </Typography>
+                        <Typography theme={ETypography_Theme.Muted}>{ props.author }</Typography>
                     </View>
                 </View>
                 <View style={styles.timeContainer}>
@@ -84,22 +89,22 @@ const SongPlayer = (props: ISongCard) => {
                 <View style={styles.controlsContent}>
                     <IconButton 
                         name={!player.muted ? "volume-high" : "volume-mute"} 
-                        theme={EIconButtonTheme.Transparent}
-                        size={EIconButtonSize.Large}
+                        theme={EIconButton_Theme.Transparent}
+                        size={EIconButton_Size.Large}
                         onPress={handleVolumePress} 
                     />
 
                     <IconButton 
                         name={!status.playing ? "play" : "pause"} 
-                        theme={EIconButtonTheme.Grayscale} 
-                        size={EIconButtonSize.Large}
+                        theme={EIconButton_Theme.Grayscale} 
+                        size={EIconButton_Size.Large}
                         onPress={handlePlayPress} 
                     />
 
                     <IconButton 
                         name={!status.loop ? "repeat-off" : "repeat"} 
-                        theme={EIconButtonTheme.Transparent}
-                        size={EIconButtonSize.Large}
+                        theme={EIconButton_Theme.Transparent}
+                        size={EIconButton_Size.Large}
                         onPress={handleLoopPress} 
                     />
                 </View>

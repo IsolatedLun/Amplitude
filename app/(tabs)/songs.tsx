@@ -21,25 +21,25 @@ const SongsTab = () => {
     return loading 
     ? <LoadingContainer />
     : error
-    ? <ErrorContainer retryFn={retryFn} />
-    : (
-         (
-        <View>
-            <WordInput 
-                onInput={setSearchValue}
-                value={searchValue} 
-                placeholder="Search songs..." 
-                title=""
-            />
+        ? <ErrorContainer retryFn={retryFn} />
+        : (
+            (
+            <View>
+                <WordInput 
+                    onInput={setSearchValue}
+                    value={searchValue} 
+                    placeholder="Search songs..." 
+                    title=""
+                />
 
-            <FlatList 
-                style={styles.songContainer}
-                contentContainerStyle={styles.songContentContainer}
-                data={data.filter(x => x.title.startsWith(searchValue))}
-                renderItem={x => <SongCard {...x.item} />}
-            />
-        </View>
-    )
+                <FlatList 
+                    style={styles.songContainer}
+                    contentContainerStyle={styles.songContentContainer}
+                    data={data.filter(x => x.title.startsWith(searchValue))}
+                    renderItem={x => <SongCard {...x.item} />}
+                />
+            </View>
+        )
     )
 };
 

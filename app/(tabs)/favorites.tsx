@@ -21,7 +21,7 @@ const FavoritesTab = () => {
                 style={styles.songContainer}
                 contentContainerStyle={styles.songContentContainer}
                 data={favorites.filter(x => x.title.startsWith(searchValue))}
-                renderItem={x => <SongCard {...x.item}  onDelete={() => null} />}
+                renderItem={x => <SongCard {...x.item} />}
             />
         </View> 
     )

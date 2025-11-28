@@ -1,14 +1,14 @@
 import { StyleSheet, View } from "react-native";
 import Icon from "../icon/Icon";
-import { EIconSize, EIconTheme } from "../icon/types";
+import { EIcon_Size, EIcon_Theme } from "../icon/types";
 import Typography from "../typography/Typography";
-import { ETypographyFontSize } from "../typography/types";
+import { ETypography_FontSize } from "../typography/types";
 
 const Navbar = () => {
     return(
         <View style={styles.container}>
-            <Icon name="music-circle" size={EIconSize.Navbar} theme={EIconTheme.Primary} />
-            <Typography fontSize={ETypographyFontSize.Title}>Ampl</Typography>
+            <Icon name="music-circle" size={EIcon_Size.Huge} theme={EIcon_Theme.Primary} />
+            <Typography fontSize={ETypography_FontSize.Title}>Ampl</Typography>
         </View>
     )
 };

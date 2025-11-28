@@ -1,7 +1,7 @@
 import { Modal, StyleSheet, TouchableOpacity } from "react-native";
 import Card from "../card/Card";
 import { ECardBorderThicknessMode } from "../card/types";
-import { ETypographyTheme } from "../typography/types";
+import { ETypography_Theme } from "../typography/types";
 import Typography from "../typography/Typography";
 import { IMModal } from "./types";
 
@@ -17,7 +17,11 @@ const MModal = (props: IMModal) => {
             { props.children }
 
             <TouchableOpacity onPress={props.closeFn}>
-                <Typography theme={ETypographyTheme.Primary} style={styles.modalCloseText}>Cancel</Typography>
+                <Typography 
+                    theme={ETypography_Theme.Primary} 
+                    style={styles.modalCloseText}>
+                        Cancel
+                </Typography>
             </TouchableOpacity>
         </Card>
     </Modal>

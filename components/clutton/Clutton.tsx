@@ -1,22 +1,22 @@
 import { useContext } from "react";
 import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 import Icon from "../icon/Icon";
-import { EIconSize } from "../icon/types";
+import { EIcon_Size } from "../icon/types";
 import { ColorSchemeContext } from "../scheme/ColorSchemeProvider";
 import { ThemeSpec } from "../scheme/types";
-import { ETypographyFont, ETypographyFontSize } from "../typography/types";
+import { ETypography_FontSize, ETypography_FontType } from "../typography/types";
 import Typography from "../typography/Typography";
 import { ECluttonBorderRadius, ECluttonPaddding, ECluttonPaddingSize, ECluttonTheme, IClutton } from "./types";
 
 const Clutton = (props: IClutton) => {
-    const { state: { colors, themes } } = useContext(ColorSchemeContext)!;
+    const { state: { colors, themes, styling } } = useContext(ColorSchemeContext)!;
     const _themes: Record<ECluttonTheme, ThemeSpec> = {
         [ECluttonTheme.Primary]: themes.buttonPrimary,
         [ECluttonTheme.Danger]: { backgroundColor: colors.textError, color: null }
     };
     const borderRadius: Record<ECluttonBorderRadius, number> = {
-        [ECluttonBorderRadius.Cube]: 8,
-        [ECluttonBorderRadius.Cylidner]: 64
+        [ECluttonBorderRadius.Cube]: styling.borderRadius.cubeRadius,
+        [ECluttonBorderRadius.Cylidner]: styling.borderRadius.cylinderRadius
     };
     const paddingSize: Record<ECluttonPaddingSize, number> = {
         [ECluttonPaddingSize.Default]: 8,
@@ -34,7 +34,7 @@ const Clutton = (props: IClutton) => {
                         * (props.paddingMode && props.paddingMode === ECluttonPaddding.Rectangle ? 2 : 1),
 
                     paddingInline: paddingSize[props.paddingSize ?? ECluttonPaddingSize.Default] * 2,
-                    borderRadius: borderRadius[props.borderRadiusMode ?? ECluttonBorderRadius.Cylidner],
+                    borderRadius: borderRadius[props.borderRadiusMode ?? ECluttonBorderRadius.Cube],
 
                     flexDirection: props.iconOrientation ?? "row",
                     alignItems: "center",
@@ -45,14 +45,14 @@ const Clutton = (props: IClutton) => {
                     ...props.style as any,
                 }}
             >
-                { props.icon ? <Icon name={props.icon} size={EIconSize.Button} /> : null }
+                { props.icon ? <Icon name={props.icon} size={EIcon_Size.Medium} /> : null }
 
                 <Typography
                     style={{ 
                         color: _themes[props.theme ?? ECluttonTheme.Primary].color ?? colors.screenText,
                     }}
-                    fontSize={ETypographyFontSize.Button} 
-                    fontType={ETypographyFont.Bold}
+                    fontSize={ETypography_FontSize.Default} 
+                    fontType={ETypography_FontType.Bold}
                     center
                 >
                     { props.text }

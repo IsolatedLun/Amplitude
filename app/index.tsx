@@ -1,9 +1,9 @@
 import Clutton from "@/components/clutton/Clutton";
 import CenterContainer from "@/components/containers/CenterContainer";
 import Icon from "@/components/icon/Icon";
-import { EIconSize, EIconTheme } from "@/components/icon/types";
+import { EIcon_Size, EIcon_Theme } from "@/components/icon/types";
 import Rotatable from "@/components/misc/Rotatable/Rotatable";
-import { ETypographyFont, ETypographyFontSize } from "@/components/typography/types";
+import { ETypography_FontSize, ETypography_FontType } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
 import { useRouter } from "expo-router";
 import { StyleSheet, View } from "react-native";
@@ -15,11 +15,11 @@ export default function Index() {
     <CenterContainer style={styles.container}>
       <View style={styles.titleContainer}>
         <Rotatable duration={2500}>
-          <Icon name="music-circle" size={EIconSize.Huge} theme={EIconTheme.Primary} />
+          <Icon name="music-circle" size={EIcon_Size.Page} theme={EIcon_Theme.Primary} />
         </Rotatable>
         <Typography 
-          fontSize={ETypographyFontSize.Title} 
-          fontType={ETypographyFont.Regular}
+          fontSize={ETypography_FontSize.Title} 
+          fontType={ETypography_FontType.Regular}
           center
         >
           Amplitude
@@ -30,13 +30,11 @@ export default function Index() {
         <Clutton
             text="Sign up" 
             icon="plus"
-            iconOrientation="row-reverse" 
             onPress={() => router.push("/auth/signup")}
         />
         <Clutton
             text="Login" 
-            icon="login" 
-            iconOrientation="row-reverse" 
+            icon="login"  
             onPress={() => router.push("/auth/login")}
         />
       </View>

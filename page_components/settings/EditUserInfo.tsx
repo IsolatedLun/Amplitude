@@ -5,7 +5,7 @@ import { ECardBorderThicknessMode, ECardPaddingMode } from "@/components/card/ty
 import Clutton from "@/components/clutton/Clutton";
 import { ECluttonBorderRadius } from "@/components/clutton/types";
 import WordInput from "@/components/inputs/WordInput";
-import { ETypographyFontSize } from "@/components/typography/types";
+import { ETypography_FontSize } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
 import { USER_VALIDATION_SCHEMA } from "@/utils/global";
 import { local_editMockUser } from "@/utils/local";
@@ -26,7 +26,7 @@ const EditUserInfo = () => {
             borderThicknessMode={ECardBorderThicknessMode.Thin}
             paddingMode={ECardPaddingMode.Medium}
         >
-            <Typography fontSize={ETypographyFontSize.Title}>My Account</Typography>
+            <Typography fontSize={ETypography_FontSize.Title}>My Account</Typography>
 
             <Formik 
                 validationSchema={USER_VALIDATION_SCHEMA}
