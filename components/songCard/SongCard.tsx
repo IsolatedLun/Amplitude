@@ -1,4 +1,4 @@
-import { ISongPreview } from "@/api/types";
+import { ISongPreview } from "@/server/src/routes/types";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";

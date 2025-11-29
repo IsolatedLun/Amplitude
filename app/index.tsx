@@ -1,3 +1,4 @@
+import { AuthUserContext } from "@/components/auth/AuthProvider";
 import Clutton from "@/components/clutton/Clutton";
 import CenterContainer from "@/components/containers/CenterContainer";
 import Icon from "@/components/icon/Icon";
@@ -6,10 +7,12 @@ import Rotatable from "@/components/misc/Rotatable/Rotatable";
 import { ETypography_FontSize, ETypography_FontType } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
 import { useRouter } from "expo-router";
+import { useContext } from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function Index() {
   const router = useRouter();
+  const { user } = useContext(AuthUserContext)!;
 
   return (
     <CenterContainer style={styles.container}>
@@ -27,16 +30,37 @@ export default function Index() {
       </View>
 
       <View style={styles.buttonContainer}>
-        <Clutton
-            text="Sign up" 
-            icon="plus"
-            onPress={() => router.push("/auth/signup")}
-        />
-        <Clutton
-            text="Login" 
-            icon="login"  
-            onPress={() => router.push("/auth/login")}
-        />
+        {
+          user 
+          ? (
+            <>
+              <Clutton
+                  text="Home" 
+                  icon="home"
+                  onPress={() => router.push("/(tabs)/songs")}
+              />
+              <Clutton
+                  text="Logout" 
+                  icon="login"  
+                  onPress={() => null}
+              />
+            </>
+          )
+          : (
+            <>
+              <Clutton
+                  text="Sign up" 
+                  icon="plus"
+                  onPress={() => router.push("/auth/signup")}
+              />
+              <Clutton
+                  text="Login" 
+                  icon="login"  
+                  onPress={() => router.push("/auth/login")}
+              />
+            </>
+          )
+        }
       </View>
     </CenterContainer>
   );

@@ -2,7 +2,6 @@ import { AuthUserContext } from "@/components/auth/AuthProvider";
 import Clutton from "@/components/clutton/Clutton";
 import { ECluttonTheme } from "@/components/clutton/types";
 import EditUserInfo from "@/page_components/settings/EditUserInfo";
-import { local_ClearSongs } from "@/utils/local";
 import { useRouter } from "expo-router";
 import { useContext } from "react";
 import { StyleSheet, View } from "react-native";
@@ -17,7 +16,7 @@ const SettingsTab = () => {
     }
 
     function handleResetAppData() {
-        local_ClearSongs();
+
     }
 
     return(

@@ -1,7 +1,8 @@
-import { capitalizeSentence, extractFileAssetData } from '@/utils/funcs';
-import { File, Paths } from "expo-file-system";
+import { bytesToMB, capitalizeSentence } from '@/utils/funcs';
+import { FileInfo } from 'expo-file-system';
+import { getInfoAsync } from "expo-file-system/legacy";
 import * as ImagePicker from 'expo-image-picker';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Card from "../card/Card";
 import Clutton from '../clutton/Clutton';
@@ -9,26 +10,12 @@ import Icon from '../icon/Icon';
 import { EIcon_Size, EIcon_Theme } from '../icon/types';
 import { ETypography_FontSize, ETypography_Theme } from '../typography/types';
 import Typography from "../typography/Typography";
-import MediaInputFileDetails from './MediaInputDetails';
-import { IMediaInput, TFilePickerAsset } from './types';
+import { IImageInput } from './types';
 
-const ImageInput = (props: IMediaInput) => {
-    const [state, setState] = useState<string>("");
-    const [fileState, setFileState] = useState<TFilePickerAsset | null>(null);
+const ImageInput = (props: IImageInput) => {
+    const [preview, setPreview] = useState<string>("");
     const [showPreview, setShowPreview] = useState(true);
-
-    useEffect(() => {
-        if(!props.value)
-            setFileState(null);
-        else if(fileState === null) {
-            const f = new File(Paths.cache, props.value)
-            setFileState(({
-                name: f.uri,
-                size: 0,
-            } as any));
-        }
-
-    }, [props.value])
+    const [fileInfo, setFileInfo] = useState<FileInfo | null>(null);
 
     async function pickImage() {
         const req = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -36,25 +23,24 @@ const ImageInput = (props: IMediaInput) => {
 
         const res = await ImagePicker.launchImageLibraryAsync({
             quality: 1,
+            allowsEditing: true
         });
         if(res.canceled)
-            return props.onInput("");
-        updateState(res.assets[0]);
-    }
-
-    function updateState(asset: TFilePickerAsset) {
-        props.onInput(asset.uri);
-        setState(asset.uri);
-        setFileState(asset);
+            return props.onInput(null);
+        
+        const uri: string = res.assets[0].uri;
+        
+        setPreview(uri);
+        await getInfoAsync(uri).then(setFileInfo)
     }
 
     return(
         <View style={styles.container}>
             {
-                fileState && showPreview
+                preview && showPreview
                 ? (
                     <Image 
-                        source={{ uri: fileState?.uri }} 
+                        source={{ uri: preview }} 
                         style={{ aspectRatio: "1", borderRadius: 12 }} 
                     />
                 )
@@ -65,18 +51,29 @@ const ImageInput = (props: IMediaInput) => {
                 <Card style={styles.uploadContainer}>
                     <View style={styles.uploadPlaceholderContainer}>
                         <Icon 
-                            name={props.icon ?? "file"} 
+                            name={"image"} 
                             size={EIcon_Size.Medium} 
                             theme={EIcon_Theme.Muted} 
                         />
                         <Typography theme={ETypography_Theme.Muted}>
-                            { props.placeholder }
+                            Upload Image File
                         </Typography>
                     </View>
 
                     {
-                        state && fileState 
-                        ? <MediaInputFileDetails {...extractFileAssetData(fileState)} />
+                        fileInfo
+                        ? (
+                            <View style={styles.fileInfoContainer}>
+                                <View style={{ flex: 1 }}>
+                                    <Typography theme={ETypography_Theme.Muted}>
+                                        Name: { fileInfo.uri!.split("/").pop()?.replaceAll("-", " ") }
+                                    </Typography>
+                                </View>
+                                <Typography theme={ETypography_Theme.Muted}>
+                                    Size: { bytesToMB(fileInfo.size!) }Mb
+                                </Typography>
+                            </View>
+                        )
                         : null
                     }
                 </Card>
@@ -94,12 +91,12 @@ const ImageInput = (props: IMediaInput) => {
             }
 
             {
-                fileState 
+                preview 
                 ? (
                     <Clutton 
                         text={showPreview ? "Close preview" : "Open Preview"}
                         onPress={() => setShowPreview(prev => !prev)} 
-                        style={{ marginInlineStart: "auto" }} 
+                        style={styles.previewButton} 
                     />
                 )
                 : null
@@ -119,6 +116,13 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         gap: 10
+    },
+    previewButton: {
+        marginInlineStart: "auto",
+        marginBlockStart: 4
+    },
+    fileInfoContainer: {
+        gap: 8
     }
 })
 

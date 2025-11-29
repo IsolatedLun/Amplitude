@@ -1,24 +1,17 @@
-import { local_ClearAuthToken, local_getMockLoginUser } from "@/utils/local";
+import { MOCK_USER } from "@/utils/global";
 import React, { createContext, useState } from "react";
 import { IAuthUser, IAuthUserContext } from "./types";
 
 const AuthUserContext = createContext<IAuthUserContext | null>(null);
 
 const AuthProvider = ({ children } : { children: React.ReactNode }) => {
-    const [user, setUser] = useState<IAuthUser | null>(null);
+    const [user, setUser] = useState<IAuthUser | null>(MOCK_USER);
 
     async function login(v: IAuthUser) {
-        const res = await local_getMockLoginUser();
-        if(v.username === res.username && v.password === res.password) {
-            setUser(v);
-            return Promise.resolve();
-        }
-        else
-            return Promise.reject("Invalid username/password.");
+
     }
 
     function logout() {
-        local_ClearAuthToken();
         setUser(null);
     }
     

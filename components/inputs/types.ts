@@ -20,6 +20,14 @@ export interface IWordInput {
 }
 
 export enum EMediaInputMode { Document, Image };
+export interface IImageInput {
+    value: File | null,
+    
+    onInput: (f: File | null) => void,
+    onBlur?: (e: any) => void,
+    error?: string
+}
+
 export interface IMediaInput {
     value: string,
     placeholder: string,

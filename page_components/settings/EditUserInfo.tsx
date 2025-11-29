@@ -8,7 +8,6 @@ import WordInput from "@/components/inputs/WordInput";
 import { ETypography_FontSize } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
 import { USER_VALIDATION_SCHEMA } from "@/utils/global";
-import { local_editMockUser } from "@/utils/local";
 import { Formik } from "formik";
 import { useContext } from "react";
 import { StyleSheet, View } from "react-native";
@@ -17,7 +16,7 @@ const EditUserInfo = () => {
     const { user } = useContext(AuthUserContext)!;
 
     function handleUserEditSubmit(v: IAuthUser) {
-        local_editMockUser(v);
+
     }
 
     return(

@@ -1,10 +1,10 @@
 import { SongAPI_FetchSong } from "@/api/songApi";
-import { ISong } from "@/api/types";
 import ErrorContainer from "@/components/containers/ErrorContainer";
 import LoadingContainer from "@/components/containers/LoadingContainer";
 import SongPlayer from "@/components/songPlayer/SongPlayer";
 import { useGetRequest } from "@/hooks/request";
-import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
+import { ISong } from "@/server/src/routes/types";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { StyleSheet } from "react-native";
 
 const PlayerPage = () => {
@@ -15,13 +15,6 @@ const PlayerPage = () => {
     function fetchSong(_id: string) {
         return () => SongAPI_FetchSong(_id);
     }
-
-    useFocusEffect(() => {
-        console.log("called")
-        fetchSong(id as string)()
-    })
-
-    
 
     return loading
     ? <LoadingContainer />

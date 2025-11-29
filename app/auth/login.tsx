@@ -11,8 +11,7 @@ import WordInput from "@/components/inputs/WordInput";
 import { ETypography_FontSize, ETypography_Theme } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
 import { USER_VALIDATION_SCHEMA } from "@/utils/global";
-import { local_CreateAuthToken, local_GetAuthToken, local_getMockLoginUser } from "@/utils/local";
-import { useFocusEffect, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import { useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -22,23 +21,9 @@ const LoginPage = () => {
     const { login } = useContext(AuthUserContext)!;
     const [loginError, setLoginError] = useState<string | null>(null);
 
-    useFocusEffect(() => {
-        (async() => {
-            const tok = await local_GetAuthToken();
-            if(tok) {
-                const mockUser = await local_getMockLoginUser();
-                login(mockUser).then(() => router.push("/(tabs)/songs"));
-            }
-        })();
-    });
 
     function handleSubmit(v: IAuthUser) {
-        login(v)
-            .then(async() => {
-                await local_CreateAuthToken();
-                router.push("/(tabs)/songs");
-            })
-            .catch(setLoginError)
+
     }
     
     return(

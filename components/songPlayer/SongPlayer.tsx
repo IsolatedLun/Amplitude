@@ -1,4 +1,4 @@
-import { ISong } from '@/api/types';
+import { ISong } from '@/server/src/routes/types';
 import { formatToMinutes } from '@/utils/funcs';
 import Slider from '@react-native-community/slider';
 import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';

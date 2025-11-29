@@ -26,7 +26,6 @@ export function useGetRequest<T>(fetchFn: () => Promise<T>, defaultValue: any): 
             .catch(err => {
                 setIsLoading(false);
                 setError(err);
-                console.log(err)
             })
     }, []);
 

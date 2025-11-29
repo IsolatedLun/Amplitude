@@ -1,0 +1,28 @@
+meta {
+  name: Song_Update
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:3000/songs/update/:id
+  body: formUrlEncoded
+  auth: inherit
+}
+
+params:path {
+  id: 692b13deba00459eab7dc78f
+}
+
+body:form-urlencoded {
+  title: asdasdasd
+}
+
+body:multipart-form {
+  title: Montagem MIAWWW
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,17 +1,15 @@
 import {
     DeleteObjectCommand,
-    DeleteObjectCommandInput,
-    GetObjectCommand,
-    GetObjectCommandInput
+    GetObjectCommand
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import express from "express";
 import { ObjectId } from "mongodb";
 import multer from "multer";
-import sharp from "sharp";
 import { BUCKET_NAME, s3, SONG_AUDIO_FOLDER, SONG_IMAGE_FOLDER } from "../aws";
 import db from "../db/connection";
-import { createPutObjectCommand } from "./utils";
+import { ISong } from "./types";
+import { createPutObjectCommand, optimizeImage } from "./utils";
 
 const SongRouter = express.Router();
 const multerMemStorage = multer.memoryStorage();
@@ -25,18 +23,14 @@ const songUploadMiddleWare = multerMemStorageInstance.fields([
 // Get Songs
 // ========================================
 SongRouter.get("", async(req, res) => {
-    const collection = db.collection("song");
+    const collection = db.collection<ISong>("song");
     const query = req.query;
     let data = "search" in req.query 
         ? await collection.find({ title: { $regex: `^${query.search}`, $options: "i" } }).toArray()
         : await collection.find({}).toArray();
 
     for(const song of data) {
-        const imageParams: GetObjectCommandInput = {
-            Bucket: BUCKET_NAME,
-            Key: song.image
-        }
-        const command = new GetObjectCommand(imageParams);
+        const command = new GetObjectCommand({ Bucket: BUCKET_NAME, Key: song.image });
         song.image = await getSignedUrl(s3, command, { expiresIn: 3600 });
     }
 
@@ -48,7 +42,7 @@ SongRouter.get("", async(req, res) => {
 // Get/Delete Song
 // ========================================
 SongRouter.get("/:id", async(req, res) => {
-    const collection = db.collection("song");
+    const collection = db.collection<ISong>("song");
     const { id } = req.params as { id: string };
     const song = await collection.findOne({ _id: new ObjectId(id) });
 
@@ -65,23 +59,14 @@ SongRouter.get("/:id", async(req, res) => {
 });
 
 SongRouter.delete("/:id", async(req, res) => {
-    const collection = db.collection("song");
+    const collection = db.collection<ISong>("song");
     const { id } = req.params as { id: string };
     const song = await collection.findOneAndDelete({ _id: new ObjectId(id) })!;
-    if(song === null)
+    if(!song)
         return res.status(404).send({ "message": `Song with id of <${id}> not found` });
 
-    const imageParams: DeleteObjectCommandInput = {
-        Bucket: BUCKET_NAME,
-        Key: song.image,
-    };
-    const audioParams: DeleteObjectCommandInput = {
-        Bucket: BUCKET_NAME,
-        Key: song.audio,
-    };
-
-    const imageCommand = new DeleteObjectCommand(imageParams);
-    const audioCommand = new DeleteObjectCommand(audioParams);
+    const imageCommand = new DeleteObjectCommand({ Bucket: BUCKET_NAME, Key: song.image });
+    const audioCommand = new DeleteObjectCommand({ Bucket: BUCKET_NAME, Key: song.audio });
 
     await s3.send(imageCommand);
     await s3.send(audioCommand);
@@ -91,21 +76,56 @@ SongRouter.delete("/:id", async(req, res) => {
 
 
 // ========================================
-// Post/Patch Song
+// Post/Put Song
 // ========================================
+SongRouter.put("/:id", songUploadMiddleWare, async(req, res) => {
+    const collection = db.collection<ISong>("song");
+    const { id } = req.params as { id: string };
+    if(!collection.findOne({ _id: new ObjectId(id) }))
+        return res.status(404).send({ "message": `Song with id of <${id}> not found` });
+        
+    try {
+        const data = { ...req.body };
+        if(req.files && "image" in req.files) {
+            const imageBuffer = await optimizeImage(req.files.image[0].buffer);
+            const [imageCommand, imageKey] = createPutObjectCommand(
+                imageBuffer, 
+                SONG_IMAGE_FOLDER, 
+                req.files.image[0]
+            );
+            
+            data["image"] = imageKey;
+            await s3.send(imageCommand);
+        };
+
+        if(req.files && "audio" in req.files) {
+            const [audioCommand, audioKey] = createPutObjectCommand(
+                req.files.audio[0].buffer, 
+                SONG_AUDIO_FOLDER, 
+                req.files.audio[0]
+            );
+    
+            data["audio"] = audioKey;
+            await s3.send(audioCommand);
+        };
+
+
+        await collection.updateOne({ _id: new ObjectId(id) }, data);
+        res.status(200).send({ message: "success" });
+    } catch(err: any) {
+        res.status(400).send({ message: err.message });
+    }
+});
+
 SongRouter.post("", songUploadMiddleWare, async(req, res) => {
-    const collection = db.collection("song");
+    const collection = db.collection<ISong>("song");
         
     try {
         const data = { ...req.body };
         if(!(req.files && "image" in req.files && "audio" in req.files))
             throw new Error("Missing files");
 
-        const imageBuffer = await sharp(req.files.image[0].buffer)
-            .resize({ width: 1024, height: 1024, fit: "contain" })
-            .jpeg()
-            .toBuffer();
-
+        const imageBuffer = await optimizeImage(req.files.image[0].buffer)
         const [imageCommand, imageKey] = createPutObjectCommand(
             imageBuffer, 
             SONG_IMAGE_FOLDER, 
