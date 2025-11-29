@@ -8,7 +8,7 @@ export interface IRequestHook<T> {
     retryFn: () => void
 }
 
-export function useGetRequest<T>(fetchFn: () => Promise<T>, defaultValue: T): IRequestHook<T> {
+export function useGetRequest<T>(fetchFn: () => Promise<T>, defaultValue: any): IRequestHook<T> {
     const [data, setData] = useState<T>(defaultValue);
     const [loading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -19,13 +19,14 @@ export function useGetRequest<T>(fetchFn: () => Promise<T>, defaultValue: T): IR
 
         fetchFn()
             .then(res => {
-                setData(res);
+                setData((res as any).data);
                 setIsLoading(false);
+                setError(null);
             })
             .catch(err => {
                 setIsLoading(false);
                 setError(err);
-
+                console.log(err)
             })
     }, []);
 

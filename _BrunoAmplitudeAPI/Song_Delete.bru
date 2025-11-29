@@ -1,0 +1,19 @@
+meta {
+  name: Song_Delete
+  type: http
+  seq: 4
+}
+
+delete {
+  url: http://localhost:3000/songs/:id
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 
+}
+
+settings {
+  encodeUrl: true
+}

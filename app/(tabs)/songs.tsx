@@ -35,7 +35,7 @@ const SongsTab = () => {
                 <FlatList 
                     style={styles.songContainer}
                     contentContainerStyle={styles.songContentContainer}
-                    data={data.filter(x => x.title.startsWith(searchValue))}
+                    data={data}
                     renderItem={x => <SongCard {...x.item} />}
                 />
             </View>

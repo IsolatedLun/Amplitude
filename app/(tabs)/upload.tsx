@@ -10,7 +10,6 @@ import { ISongCard, ISongCardFormData } from "@/components/songCard/types";
 import { ETypography_FontSize } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
 import { SERVER_URL } from "@/utils/global";
-import { local_GetSong, local_UpdateSong } from "@/utils/local";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { Formik } from "formik";
 import { useCallback, useState } from "react";
@@ -38,11 +37,6 @@ const UploadTab = () => {
             .catch(err => console.log(err))
     }
 
-    async function editSong(v: ISongCardFormData, resetFormFunc: any) {
-        await local_UpdateSong(editID as string, v);
-        cancelEditSong(resetFormFunc);
-    }
-
     function cancelEditSong(resetFormFunc: any) {
         resetFormFunc();
         router.setParams({ editID: undefined });
@@ -60,14 +54,14 @@ const UploadTab = () => {
                     ({ handleChange, handleBlur, setFieldValue, submitForm, resetForm, values,  errors }) => {
                         useFocusEffect(useCallback(() => {
                             if(editID !== null) {
-                                local_GetSong(editID as string)
-                                    .then(res => {
-                                        if(res !== null) {
-                                            const fields = ["title", "author", "image", "audio"];
-                                            fields.forEach(field => setFieldValue(field, (res as any)[field], false));
-                                            setSongToEdit(res);
-                                        }
-                                    })
+                                // local_GetSong(editID as string)
+                                //     .then(res => {
+                                //         if(res !== null) {
+                                //             const fields = ["title", "author", "image", "audio"];
+                                //             fields.forEach(field => setFieldValue(field, (res as any)[field], false));
+                                //             setSongToEdit(res);
+                                //         }
+                                //     })
                             }
 
                             return () => resetForm()
@@ -129,7 +123,7 @@ const UploadTab = () => {
                                             <Clutton 
                                                 text="Save changes" 
                                                 icon="update" 
-                                                onPress={() => editSong(values, resetForm)} 
+                                                onPress={() => null} 
                                             />
                                             <Clutton 
                                                 theme={ECluttonTheme.Danger}

@@ -1,43 +1,33 @@
-import Clutton from "@/components/clutton/Clutton";
-import { ECluttonTheme } from "@/components/clutton/types";
-import CenterContainer from "@/components/containers/CenterContainer";
-import { ISongCard } from "@/components/songCard/types";
+import { SongAPI_FetchSong } from "@/api/songApi";
+import { ISong } from "@/api/types";
+import ErrorContainer from "@/components/containers/ErrorContainer";
+import LoadingContainer from "@/components/containers/LoadingContainer";
 import SongPlayer from "@/components/songPlayer/SongPlayer";
-import { ETypographyFontSize, ETypographyTheme } from "@/components/typography/types";
-import Typography from "@/components/typography/Typography";
-import { SERVER_URL } from "@/utils/global";
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useGetRequest } from "@/hooks/request";
+import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { StyleSheet } from "react-native";
 
 const PlayerPage = () => {
     const { id } = useLocalSearchParams();
-    const [song, setSong] = useState<ISongCard | null>(null);
+    const { data, loading, error } = useGetRequest<ISong>(fetchSong(id as string), null)
     const router = useRouter();
 
-    useEffect(() => {
-        fetch(SERVER_URL + "/songs/" + id, { method: "GET" })
-            .then((res) => res.json())
-            .then(setSong)
-            .catch(err => console.log(err))
-    }, [])
+    function fetchSong(_id: string) {
+        return () => SongAPI_FetchSong(_id);
+    }
 
-    return !song ? (
-        <CenterContainer style={styles.errorContainer} alignCenter>
-            <Typography 
-                theme={ETypographyTheme.Error} 
-                fontSize={ETypographyFontSize.Title}
-            >
-                    Song not found.
-            </Typography>
+    useFocusEffect(() => {
+        console.log("called")
+        fetchSong(id as string)()
+    })
 
-            <Clutton 
-                onPress={() => router.replace("/(tabs)/songs")}
-                text="Return home"
-                theme={ECluttonTheme.Primary}
-            />
-        </CenterContainer>
-    ) : <SongPlayer { ...song } />
+    
+
+    return loading
+    ? <LoadingContainer />
+    : error
+        ? <ErrorContainer goBackFn={() => router.replace("/(tabs)/songs")} />
+        : <SongPlayer { ...data } />
 };
 
 const styles = StyleSheet.create({

@@ -11,6 +11,6 @@ export const SongAPI_FetchSongs: () => Promise<ISongPreview[]> = () => api.get("
     method: "GET"
 })
 
-export const SongAPI_FetchSong: (id: string) => Promise<ISong> = (id: string) => api.get(id, {
+export const SongAPI_FetchSong: (id: string) => Promise<ISong> = (id: string) => api.get(`/${id}`, {
     method: "GET"
 })

@@ -1,3 +1,4 @@
+import { ISong } from '@/api/types';
 import { formatToMinutes } from '@/utils/funcs';
 import Slider from '@react-native-community/slider';
 import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
@@ -8,11 +9,10 @@ import CenterContainer from "../containers/CenterContainer";
 import IconButton from '../iconButton/IconButton';
 import { EIconButton_Size, EIconButton_Theme } from '../iconButton/types';
 import { ColorSchemeContext } from '../scheme/ColorSchemeProvider';
-import { ISongCard } from "../songCard/types";
 import Typography from "../typography/Typography";
 import { ETypography_FontSize, ETypography_Theme } from '../typography/types';
 
-const SongPlayer = (props: ISongCard) => {
+const SongPlayer = (props: ISong) => {
     const router = useRouter();
     const player = useAudioPlayer(props.audio);
     const status = useAudioPlayerStatus(player);
@@ -49,11 +49,13 @@ const SongPlayer = (props: ISongCard) => {
                     <IconButton 
                         name="arrow-left"
                         theme={EIconButton_Theme.Transparent}
+                        size={EIconButton_Size.Large}
                         onPress={handleGoBack}
                     />
                     <IconButton 
                         name="dots-vertical"
                         theme={EIconButton_Theme.Transparent}
+                        size={EIconButton_Size.Large}
                         onPress={() => null}
                     />
                 </View>
@@ -97,7 +99,7 @@ const SongPlayer = (props: ISongCard) => {
                     <IconButton 
                         name={!status.playing ? "play" : "pause"} 
                         theme={EIconButton_Theme.Grayscale} 
-                        size={EIconButton_Size.Large}
+                        size={EIconButton_Size.Gigantic}
                         onPress={handlePlayPress} 
                     />
 
