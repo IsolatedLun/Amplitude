@@ -1,5 +1,5 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
-import { File, FileInfo } from "expo-file-system"
+import { FileInfo } from "expo-file-system"
 import { ComponentProps } from "react"
 
 export enum EWordInputTheme { Primary };
@@ -25,17 +25,18 @@ export interface IFileInfoCard {
 }
 
 export interface IImageInput {
-    value: File | null,
+    value: string,
     
-    onInput: (f: File | null) => void,
+    onInput: (f: string) => void,
     onBlur?: (e: any) => void,
     error?: string
 }
 
+type IFileData = { uri: string, name: string, type: string }
 export interface IAudioInput {
-    value: File | null,
+    value: string,
     
-    onInput: (f: File | null) => void,
+    onInput: (f: IFileData) => void,
     onBlur?: (e: any) => void,
     error?: string
 }

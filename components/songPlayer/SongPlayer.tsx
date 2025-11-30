@@ -1,7 +1,7 @@
 import { ISong } from '@/server/src/routes/types';
 import { formatToMinutes } from '@/utils/funcs';
 import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { useContext } from 'react';
 import { Image, StyleSheet, View } from "react-native";
 import CenterContainer from "../containers/CenterContainer";
@@ -17,6 +17,13 @@ const SongPlayer = (props: ISong) => {
     const player = useAudioPlayer(props.audio);
     const status = useAudioPlayerStatus(player);
     const { state: { themes } } = useContext(ColorSchemeContext)!;
+
+    useFocusEffect(() => {
+        return () => {
+            player.pause();
+            player.remove();
+        }
+    });
 
     function handlePlayPress() {
         if(status.playing)

@@ -15,10 +15,11 @@ export const SongAPI_FetchSong: (id: string) => Promise<ISong> = (id: string) =>
     method: "GET"
 })
 
-export const SongAPI_UploadSong: (data: FormData) => Promise<void> = (data: FormData) => api.post("", {
-    method: "POST",
-    body: data
-});
+// im forced to use fetch because for some reason, multer cant detect files if i send requests usign axios
+export const SongAPI_UploadSong: (data: FormData) => Promise<Response> = (data: FormData) => fetch(
+    SERVER_URL + "/songs",
+    { method: "POST", body: data }
+)
 
 export const SongAPI_UpdateSong: (data: FormData) => Promise<void> = (data: FormData) => api.post("", {
     method: "PUT",

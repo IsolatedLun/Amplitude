@@ -1,3 +1,4 @@
+import { SongAPI_UploadSong } from "@/api/songApi";
 import Clutton from "@/components/clutton/Clutton";
 import { ECluttonTheme } from "@/components/clutton/types";
 import Icon from "@/components/icon/Icon";
@@ -7,26 +8,34 @@ import ImageInput from "@/components/inputs/ImageInput";
 import WordInput from "@/components/inputs/WordInput";
 import { ETypography_FontSize } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
-import { SERVER_URL } from "@/utils/global";
+import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import { ScrollView, StyleSheet, View } from "react-native";
 import * as YUP from "yup";
 
 const UploadTab = () => {
+    const router = useRouter();
     const songValidationSchema = YUP.object<any>().shape({
         title: YUP.string().required(),
         author: YUP.string().required(),
         image: YUP.mixed().required(),
-        audio: YUP.mixed().required(),
+        audio: YUP.object().required(),
     });
 
     async function uploadSong(v: any, resetFormFunc: any) {
         const data = new FormData();
-        data.append("file", { uri: v.image, name: "", type: "" } as any)
-        data.append("title", v.title)
-        
-        await fetch(SERVER_URL + "/songs", { method: "POST", body: data })
-            .then(x => console.log(x))
+        data.append("title", v.title);
+        data.append("author", v.author);
+        data.append("image", {
+            uri: v.image,
+            name: "audio.jpg",
+            type: "image/jpeg"
+        } as any);
+        data.append("audio", v.audio);
+
+        SongAPI_UploadSong(data)
+            .then(res => res.json())
+            .then(body => router.replace(`/player/${body.id}`))
             .catch(err => console.log(err))
     }
 
@@ -34,7 +43,7 @@ const UploadTab = () => {
         <ScrollView>
             <Formik
                 validationSchema={songValidationSchema}
-                initialValues={{ title: "", author: "", image: null, audio: null }}
+                initialValues={{ title: "", author: "", image: "", audio: "" }}
                 onSubmit={(v, formik) => uploadSong(v, formik.resetForm)}
             >
                 {
@@ -73,18 +82,22 @@ const UploadTab = () => {
                                     <ImageInput 
                                         value={values.image}
                                         error={errors.image}
-                                        onInput={(v) => setFieldValue("image", v)} 
+                                        onInput={handleChange("image")} 
                                     />
 
                                     <AudioInput 
                                         value={values.audio}
                                         error={errors.audio}
-                                        onInput={(v) => setFieldValue("audio", v)} 
+                                        onInput={v => setFieldValue("audio", v)} 
                                     />
                                 </View>
 
                                 <View style={styles.formButtonContainer}>
-                                    <Clutton text="Upload" icon="upload" />
+                                    <Clutton 
+                                        text="Upload"
+                                        icon="upload"
+                                        onPress={submitForm}
+                                    />
                                     <Clutton 
                                         text="Reset" 
                                         icon="restore" 

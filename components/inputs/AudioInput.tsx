@@ -1,8 +1,10 @@
 import { capitalizeSentence, formatToMinutes } from "@/utils/funcs";
 import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import { getDocumentAsync } from "expo-document-picker";
-import { File, FileInfo, Paths } from "expo-file-system";
+import { FileInfo } from "expo-file-system";
 import { getInfoAsync } from "expo-file-system/legacy";
+import { useFocusEffect } from "expo-router";
+import * as mime from 'mime';
 import { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import IconButton from "../iconButton/IconButton";
@@ -12,6 +14,7 @@ import Typography from "../typography/Typography";
 import FileInfoCard from "./FileInfoCard";
 import SongSlider from "./SongSlider";
 import { IAudioInput } from "./types";
+
 
 const AudioInput = (props: IAudioInput) => {
     const player = useAudioPlayer(null);
@@ -24,16 +27,25 @@ const AudioInput = (props: IAudioInput) => {
             player.remove();
             setFileInfo(null);
         }
-    }, [props.value])
+    }, [props.value]);
+
+    useFocusEffect(() => {
+        return () => {
+            player.pause();
+            player.remove();
+        }
+    });
 
     async function pickAudio() {
-        const res = await getDocumentAsync({ type: "audio/*" });
+        const res = await getDocumentAsync({ type: "audio/*", copyToCacheDirectory: true });
         if(res.canceled) return;
 
         const uri: string = res.assets[0].uri;
-        const f: File = new File(Paths.cache, uri);
-        
-        props.onInput(f);
+        props.onInput({
+            uri,
+            name: res.assets[0].name!,
+            type: mime.default.getType(res.assets[0].name) ?? "audio/mpeg"
+        });
         await getInfoAsync(uri).then(setFileInfo);
         player.replace(uri);
     }

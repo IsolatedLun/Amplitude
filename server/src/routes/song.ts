@@ -110,7 +110,7 @@ SongRouter.put("/:id", songUploadMiddleWare, async(req, res) => {
         };
 
 
-        await collection.updateOne({ _id: new ObjectId(id) }, data);
+        await collection.findOneAndUpdate({ _id: new ObjectId(id) }, { $set: data });
         res.status(200).send({ message: "success" });
     } catch(err: any) {
         res.status(400).send({ message: err.message });
@@ -119,12 +119,13 @@ SongRouter.put("/:id", songUploadMiddleWare, async(req, res) => {
 
 SongRouter.post("", songUploadMiddleWare, async(req, res) => {
     const collection = db.collection<ISong>("song");
-        
+
     try {
         const data = { ...req.body };
         if(!(req.files && "image" in req.files && "audio" in req.files))
             throw new Error("Missing files");
 
+        console.log("received")
         const imageBuffer = await optimizeImage(req.files.image[0].buffer)
         const [imageCommand, imageKey] = createPutObjectCommand(
             imageBuffer, 
@@ -143,9 +144,10 @@ SongRouter.post("", songUploadMiddleWare, async(req, res) => {
         data["image"] = imageKey;
         data["audio"] = audioKey;
 
-        await collection.insertOne(data);
-        res.status(200).send();
+        const song = await collection.insertOne(data);
+        res.status(200).send({ id: song.insertedId });
     } catch(err: any) {
+        console.log(req.body.body)
         res.status(400).send({ message: err.message });
     }
 });

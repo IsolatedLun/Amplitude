@@ -1,5 +1,5 @@
 import { capitalizeSentence } from '@/utils/funcs';
-import { File, FileInfo, Paths } from 'expo-file-system';
+import { FileInfo } from 'expo-file-system';
 import { getInfoAsync } from "expo-file-system/legacy";
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from "react";
@@ -29,12 +29,12 @@ const ImageInput = (props: IImageInput) => {
 
         const res = await ImagePicker.launchImageLibraryAsync({ quality: 1, allowsEditing: true });
         if(res.canceled)
-            return props.onInput(null);
+            return props.onInput("");
         
         const uri: string = res.assets[0].uri;
         
         setPreview(uri);
-        props.onInput(new File(Paths.cache, uri));
+        props.onInput(uri);
         await getInfoAsync(uri).then(setFileInfo);
     }
 
