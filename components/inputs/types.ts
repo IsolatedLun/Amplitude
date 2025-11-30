@@ -1,6 +1,5 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
-import { DocumentPickerAsset } from "expo-document-picker"
-import { ImagePickerAsset } from "expo-image-picker"
+import { File, FileInfo } from "expo-file-system"
 import { ComponentProps } from "react"
 
 export enum EWordInputTheme { Primary };
@@ -19,7 +18,12 @@ export interface IWordInput {
     onBlur?: (e: any) => void
 }
 
-export enum EMediaInputMode { Document, Image };
+export interface IFileInfoCard {
+    fileInfo: FileInfo | null,
+    title: string,
+    icon: ComponentProps<typeof MaterialCommunityIcons>["name"],
+}
+
 export interface IImageInput {
     value: File | null,
     
@@ -28,18 +32,15 @@ export interface IImageInput {
     error?: string
 }
 
-export interface IMediaInput {
-    value: string,
-    placeholder: string,
-    mode: EMediaInputMode,
-    onInput: (v: string) => void,
-
-    icon?: ComponentProps<typeof MaterialCommunityIcons>["name"],
-    error?: string,
-    onBlur?: (e: any) => void
+export interface IAudioInput {
+    value: File | null,
+    
+    onInput: (f: File | null) => void,
+    onBlur?: (e: any) => void,
+    error?: string
 }
-export type TFilePickerAsset = ImagePickerAsset | DocumentPickerAsset;
-export interface IFilePickerAssetProps {
-    size: number,
-    name: string
+
+export interface ISongSlider {
+    value: number,
+    onChange: (v: number) => void,
 }

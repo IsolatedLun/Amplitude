@@ -1,5 +1,8 @@
+import Clutton from "@/components/clutton/Clutton";
+import { ECluttonTheme } from "@/components/clutton/types";
 import Icon from "@/components/icon/Icon";
 import { EIcon_Size, EIcon_Theme } from "@/components/icon/types";
+import AudioInput from "@/components/inputs/AudioInput";
 import ImageInput from "@/components/inputs/ImageInput";
 import WordInput from "@/components/inputs/WordInput";
 import { ETypography_FontSize } from "@/components/typography/types";
@@ -70,17 +73,24 @@ const UploadTab = () => {
                                     <ImageInput 
                                         value={values.image}
                                         error={errors.image}
-                                        onInput={(v: File | null) => setFieldValue("image", v)} 
+                                        onInput={(v) => setFieldValue("image", v)} 
                                     />
 
-                                    {/* <MediaInput 
-                                        icon="volume-high"
-                                        mode={EMediaInputMode.Document} 
+                                    <AudioInput 
                                         value={values.audio}
                                         error={errors.audio}
-                                        placeholder="Upload Audio File"
-                                        onInput={handleChange("audio")} 
-                                    /> */}
+                                        onInput={(v) => setFieldValue("audio", v)} 
+                                    />
+                                </View>
+
+                                <View style={styles.formButtonContainer}>
+                                    <Clutton text="Upload" icon="upload" />
+                                    <Clutton 
+                                        text="Reset" 
+                                        icon="restore" 
+                                        theme={ECluttonTheme.Danger} 
+                                        onPress={resetForm}
+                                    />
                                 </View>
                             </View>
                         )
@@ -103,8 +113,10 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         gap: 12
     },
-    editButtonContainer: {
-        gap: 18
+    formButtonContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        gap: 12,
     }
 })
 

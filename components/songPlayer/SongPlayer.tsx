@@ -1,6 +1,5 @@
 import { ISong } from '@/server/src/routes/types';
 import { formatToMinutes } from '@/utils/funcs';
-import Slider from '@react-native-community/slider';
 import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import { useRouter } from 'expo-router';
 import { useContext } from 'react';
@@ -8,6 +7,7 @@ import { Image, StyleSheet, View } from "react-native";
 import CenterContainer from "../containers/CenterContainer";
 import IconButton from '../iconButton/IconButton';
 import { EIconButton_Size, EIconButton_Theme } from '../iconButton/types';
+import SongSlider from '../inputs/SongSlider';
 import { ColorSchemeContext } from '../scheme/ColorSchemeProvider';
 import Typography from "../typography/Typography";
 import { ETypography_FontSize, ETypography_Theme } from '../typography/types';
@@ -72,15 +72,9 @@ const SongPlayer = (props: ISong) => {
                     </View>
                 </View>
                 <View style={styles.timeContainer}>
-                    <Slider
-                        thumbTintColor={themes.sliderPrimary.color!}
-                        minimumTrackTintColor={themes.sliderPrimary.color!}
-                        maximumTrackTintColor={themes.sliderPrimary.backgroundColor}
-                        onValueChange={v => player.seekTo(v * status.duration)}
-
+                    <SongSlider 
                         value={(status.currentTime / status.duration)}
-                        minimumValue={0} 
-                        maximumValue={1}
+                        onChange={v => player.seekTo(v * status.duration)}
                     />
 
                     <View style={styles.timeContentContainer}>
@@ -90,7 +84,7 @@ const SongPlayer = (props: ISong) => {
                 </View>
                 <View style={styles.controlsContent}>
                     <IconButton 
-                        name={!player.muted ? "volume-high" : "volume-mute"} 
+                        name={!player.currentStatus.mute ? "volume-high" : "volume-mute"} 
                         theme={EIconButton_Theme.Transparent}
                         size={EIconButton_Size.Large}
                         onPress={handleVolumePress} 
@@ -104,7 +98,7 @@ const SongPlayer = (props: ISong) => {
                     />
 
                     <IconButton 
-                        name={!status.loop ? "repeat-off" : "repeat"} 
+                        name={!player.currentStatus.loop ? "repeat-off" : "repeat"} 
                         theme={EIconButton_Theme.Transparent}
                         size={EIconButton_Size.Large}
                         onPress={handleLoopPress} 
