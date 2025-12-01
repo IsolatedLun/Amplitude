@@ -1,10 +1,10 @@
+import bcrypt from "bcrypt";
 import express from "express";
+import * as jwt from "jsonwebtoken";
 import db from "../../db/connection";
+import { generateUUID } from "../../utils";
 import { IUser } from "../types";
 import { loginValidationSchema, signUpValidationSchema } from "./schemas";
-import bcrypt from "bcrypt";
-import * as jwt from "jsonwebtoken";
-import { generateUUID } from "../../utils";
 
 const UserRouter = express.Router();
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || "shhhhh";
@@ -48,7 +48,7 @@ UserRouter.post("/signup", async(req, res) => {
     const { username, password } = value;
     const user = await collection.findOne({ username });
     if(user)
-        return res.status(400).send({ error: "Username already exists" })
+        return res.status(400).send({ error: "Username already exists" });
 
     bcrypt.hash(password, saltRounds, async(err, hash) => {
         const refreshToken = jwt.sign({ uuid: generateUUID() }, JWT_SECRET_KEY, { expiresIn: "30d" });

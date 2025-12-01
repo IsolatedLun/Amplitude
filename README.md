@@ -16,7 +16,7 @@ OR
 
 - [How to setup your own S3 bucket](https://www.youtube.com/watch?v=eQAIojcArRY)
 
-***server => .env***
+***(root dir) .env***
 ```
 ACCESS_KEY=...
 SECRET_ACCESS_KEY=...
@@ -27,15 +27,14 @@ SONG_IMAGE_FOLDER_PATH=...
 SONG_AUDIO_FOLDER_PATH=...
 
 MONGO_URI=...
+FRONTEND_IP=...
 LOCAL_IP=...
 PORT=...
+
+JWT_SECRET_KEY=...
 ```
 
-***.env***
-```
-LOCAL_IP=...
-PORT=...
-```
+---
 
 ### Technologies used
 - React native + expo (frontend)
@@ -47,6 +46,8 @@ PORT=...
 - React native + expo is an obvious one
 - I've never used mongoDB before and thought it would cool to make a project with it
 - Since mongoDB is document based and has limitations storing files (it took 30s to receive ±2mb files stored in binary), and while I could've used the GridFS api provided by them. I decided to use and learn AWS S3 + it's a really valuabe skill
+
+---
 
 ### Features
 - Auth (WIP)
@@ -65,7 +66,7 @@ PORT=...
 - [Slider](https://docs.expo.dev/versions/latest/sdk/slider/)
 - [Yup](https://www.npmjs.com/package/yup) (frontend validation)
 - [Formik](https://formik.org/)
-
+<br>
 - [MongoDB](https://www.npmjs.com/package/mongodb)
 - [AWS S3](https://www.npmjs.com/package/@aws-sdk/client-s3)
 - [UUID](https://www.npmjs.com/package/react-native-uuid) (for generating rand ids + tokens)

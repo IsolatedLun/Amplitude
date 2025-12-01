@@ -8,8 +8,8 @@ import { ObjectId } from "mongodb";
 import multer from "multer";
 import { BUCKET_NAME, s3, SONG_AUDIO_FOLDER, SONG_IMAGE_FOLDER } from "../aws";
 import db from "../db/connection";
-import { ISong } from "./types";
 import { createPutObjectCommand, optimizeImage } from "../utils";
+import { ISong } from "./types";
 
 const SongRouter = express.Router();
 const multerMemStorage = multer.memoryStorage();
@@ -45,7 +45,6 @@ SongRouter.get("/:id", async(req, res) => {
     const collection = db.collection<ISong>("song");
     const { id } = req.params as { id: string };
     const song = await collection.findOne({ _id: new ObjectId(id) });
-
     if(!song)
         return res.status(404).send({ message: `Song with id of <${id}> not found` });
 
