@@ -10,3 +10,11 @@ export interface ISongPreview {
 export interface ISong extends ISongPreview {
     audio: string
 }
+
+// ==========================
+export interface IUser {
+    username: string,
+    password: string,
+    profile: string,
+    refreshToken: string
+}

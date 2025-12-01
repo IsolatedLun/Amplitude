@@ -56,23 +56,27 @@ PORT=...
 - Light/Dark mode *(works but light mode is disabled)*
 
 #### Most Notable Packages Used:
+- [DocumentPicker](https://www.npmjs.com/package/expo-document-picker)
+- [ImagePicker](https://www.npmjs.com/package/expo-image-picker)
+- [AsyncStorage](https://docs.expo.dev/versions/latest/sdk/async-storage/)
+- [SecureStore](https://www.npmjs.com/package/expo-secure-store)
+- [Reanimated](https://www.npmjs.com/package/react-native-reanimated)
+- [Expo Audio](https://www.npmjs.com/package/expo-audio)
+- [Slider](https://docs.expo.dev/versions/latest/sdk/slider/)
+- [Yup](https://www.npmjs.com/package/yup) (frontend validation)
+- [Formik](https://formik.org/)
+
+- [MongoDB](https://www.npmjs.com/package/mongodb)
+- [AWS S3](https://www.npmjs.com/package/@aws-sdk/client-s3)
 - [UUID](https://www.npmjs.com/package/react-native-uuid) (for generating rand ids + tokens)
 - [Sharp](https://www.npmjs.com/package/sharp) (image processing)
 - [Axios](https://www.npmjs.com/package/axios)
-- [AWS S3](https://www.npmjs.com/package/@aws-sdk/client-s3)
-- [MongoDB](https://www.npmjs.com/package/mongodb)
-- [SecureStore](https://www.npmjs.com/package/expo-secure-store)
-- [AsyncStorage](https://docs.expo.dev/versions/latest/sdk/async-storage/)
-- [Reanimated](https://www.npmjs.com/package/react-native-reanimated)
-- [ImagePicker](https://www.npmjs.com/package/expo-image-picker)
-- [DocumentPicker](https://www.npmjs.com/package/expo-document-picker)
-- [Expo Audio](https://www.npmjs.com/package/expo-audio)
-- [Formik](https://formik.org/)
-- [Slider](https://docs.expo.dev/versions/latest/sdk/slider/)
-- [Yup](https://www.npmjs.com/package/yup)
+- [Joi](https://www.npmjs.com/package/joi) (backend validation)
+- [Bcrypt](https://www.npmjs.com/package/bcrypt) (password hashing)
+- [JWT](https://www.npmjs.com/package/jsonwebtoken)
 
 ##### Known issues
-- Due to the way expo handles local files, I cant get the file info during editing, so I cant provide the input with the file name and size (thats why i just show `Change [Image/Audio] File`).
+- Due to the way expo handles local files, I cant get the file info during editing, so I cant provide the input with the file name and size (thats why i just show `Change [Image/Audio] File`). [SOLVED]
 - Expo audio is sometimes glitchy with `loop`, `isPlaying`, `volume` states.
 - Light theme is ugly, need to play around with colors.
 - Some minor (hopefully) bugs may introduce themselves due to me not testing individual components.

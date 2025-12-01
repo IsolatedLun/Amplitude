@@ -1,16 +1,16 @@
 import { SongAPI_FetchSongs } from "@/api/songApi";
-import { ISongPreview } from "@/api/types";
 import ErrorContainer from "@/components/containers/ErrorContainer";
 import LoadingContainer from "@/components/containers/LoadingContainer";
 import WordInput from "@/components/inputs/WordInput";
 import SongCard from "@/components/songCard/SongCard";
-import { useGetRequest } from "@/hooks/request";
+import { useRequest } from "@/hooks/request";
+import { ISongPreview } from "@/server/src/routes/types";
 import { useFocusEffect } from "expo-router";
 import { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
 const SongsTab = () => {
-    const { data, loading, error, retryFn } = useGetRequest<ISongPreview[]>(SongAPI_FetchSongs, []);
+    const { data, loading, error, retryFn } = useRequest<ISongPreview[]>(SongAPI_FetchSongs, [], true);
     const [searchValue, setSearchValue] = useState("");
 
     useFocusEffect(() => {

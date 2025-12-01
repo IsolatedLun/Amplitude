@@ -24,15 +24,15 @@ export interface IFileInfoCard {
     icon: ComponentProps<typeof MaterialCommunityIcons>["name"],
 }
 
+type IFileData = { uri: string, name: string, type: string }
 export interface IImageInput {
     value: string,
     
-    onInput: (f: string) => void,
+    onInput: (f: IFileData) => void,
     onBlur?: (e: any) => void,
     error?: string
 }
 
-type IFileData = { uri: string, name: string, type: string }
 export interface IAudioInput {
     value: string,
     

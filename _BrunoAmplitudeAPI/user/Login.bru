@@ -1,0 +1,20 @@
+meta {
+  name: Login
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/users/login
+  body: formUrlEncoded
+  auth: inherit
+}
+
+body:form-urlencoded {
+  username: mamad
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

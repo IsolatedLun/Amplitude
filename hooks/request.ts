@@ -8,7 +8,7 @@ export interface IRequestHook<T> {
     retryFn: () => void
 }
 
-export function useGetRequest<T>(fetchFn: () => Promise<T>, defaultValue: any): IRequestHook<T> {
+export function useRequest<T>(fetchFn: () => Promise<T>, defaultValue: any, callOnAwake: boolean = false): IRequestHook<T> {
     const [data, setData] = useState<T>(defaultValue);
     const [loading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -30,7 +30,10 @@ export function useGetRequest<T>(fetchFn: () => Promise<T>, defaultValue: any): 
     }, []);
 
     useEffect(() => {
-        callback();
+        if(callOnAwake)
+            callback();
+        else
+            setIsLoading(false);
     }, []);
 
     return { data, loading, error, retryFn: callback };

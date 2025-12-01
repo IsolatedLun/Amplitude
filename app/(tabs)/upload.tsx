@@ -10,11 +10,13 @@ import { ETypography_FontSize } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
 import { useRouter } from "expo-router";
 import { Formik } from "formik";
+import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import * as YUP from "yup";
 
 const UploadTab = () => {
     const router = useRouter();
+    const [isUploading, setIsUploading] = useState(false);
     const songValidationSchema = YUP.object<any>().shape({
         title: YUP.string().required(),
         author: YUP.string().required(),
@@ -26,17 +28,15 @@ const UploadTab = () => {
         const data = new FormData();
         data.append("title", v.title);
         data.append("author", v.author);
-        data.append("image", {
-            uri: v.image,
-            name: "audio.jpg",
-            type: "image/jpeg"
-        } as any);
+        data.append("image", v.image);
         data.append("audio", v.audio);
 
+        setIsUploading(true);
         SongAPI_UploadSong(data)
             .then(res => res.json())
             .then(body => router.replace(`/player/${body.id}`))
             .catch(err => console.log(err))
+            .finally(() => setIsUploading(false));
     }
 
     return(
@@ -82,7 +82,7 @@ const UploadTab = () => {
                                     <ImageInput 
                                         value={values.image}
                                         error={errors.image}
-                                        onInput={handleChange("image")} 
+                                        onInput={v => setFieldValue("image", v)} 
                                     />
 
                                     <AudioInput 
@@ -97,6 +97,7 @@ const UploadTab = () => {
                                         text="Upload"
                                         icon="upload"
                                         onPress={submitForm}
+                                        loading={isUploading}
                                     />
                                     <Clutton 
                                         text="Reset" 

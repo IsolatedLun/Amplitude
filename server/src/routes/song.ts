@@ -9,7 +9,7 @@ import multer from "multer";
 import { BUCKET_NAME, s3, SONG_AUDIO_FOLDER, SONG_IMAGE_FOLDER } from "../aws";
 import db from "../db/connection";
 import { ISong } from "./types";
-import { createPutObjectCommand, optimizeImage } from "./utils";
+import { createPutObjectCommand, optimizeImage } from "../utils";
 
 const SongRouter = express.Router();
 const multerMemStorage = multer.memoryStorage();
@@ -22,7 +22,7 @@ const songUploadMiddleWare = multerMemStorageInstance.fields([
 // ========================================
 // Get Songs
 // ========================================
-SongRouter.get("", async(req, res) => {
+SongRouter.get("/", async(req, res) => {
     const collection = db.collection<ISong>("song");
     const query = req.query;
     let data = "search" in req.query 

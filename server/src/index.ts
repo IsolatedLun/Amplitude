@@ -1,6 +1,7 @@
 import cors from "cors";
 import express from "express";
 import SongRouter from "./routes/song";
+import UserRouter from "./routes/user/user";
 
 // ========================================
 // Options
@@ -20,6 +21,7 @@ app.use(cors({
 // Routes
 // ========================================
 app.use("/songs", SongRouter);
+app.use("/users", UserRouter);
 
 app.listen(PORT, () => {
     console.log(`[Ampl] Server started listening on http://localhost:${PORT}`);
