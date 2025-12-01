@@ -37,6 +37,7 @@ JWT_SECRET_KEY=...
 ---
 
 ### Technologies used
+- Bruno (API testing, like postman or insomnia)
 - React native + expo (frontend)
 - MongoDB (database)
 - AWS S3 (file storage)
@@ -66,7 +67,14 @@ JWT_SECRET_KEY=...
 - [Slider](https://docs.expo.dev/versions/latest/sdk/slider/)
 - [Yup](https://www.npmjs.com/package/yup) (frontend validation)
 - [Formik](https://formik.org/)
+
 <br>
+
+- [Express](https://www.npmjs.com/package/express)
+- [Express/CORS](https://www.npmjs.com/package/cors)
+- [Express/Multer](https://www.npmjs.com/package/multer) (file upload middleware)
+- [Express/Rate-Limit](https://www.npmjs.com/package/express-rate-limit)
+- [Express/Morgan](https://www.npmjs.com/package/morgan) (logging)
 - [MongoDB](https://www.npmjs.com/package/mongodb)
 - [AWS S3](https://www.npmjs.com/package/@aws-sdk/client-s3)
 - [UUID](https://www.npmjs.com/package/react-native-uuid) (for generating rand ids + tokens)
