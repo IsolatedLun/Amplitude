@@ -6,17 +6,17 @@ import SongCard from "@/components/songCard/SongCard";
 import { useRequest } from "@/hooks/request";
 import { ISongPreview } from "@/server/src/routes/types";
 import { useFocusEffect } from "expo-router";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
 const SongsTab = () => {
     const { data, loading, error, retryFn } = useRequest<ISongPreview[]>(SongAPI_FetchSongs, [], true);
     const [searchValue, setSearchValue] = useState("");
 
-    useFocusEffect(() => {
-        if(data.length == 0)
+    useFocusEffect(useCallback(() => {
+        if(data.length == 0 && !loading)
             retryFn();
-    })
+    }, []));
 
     return loading 
     ? <LoadingContainer />

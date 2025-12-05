@@ -16,6 +16,7 @@ export interface IClutton {
     paddingSize?: ECluttonPaddingSize,
     borderRadiusMode?: ECluttonBorderRadius,
     iconOrientation?: "row" | "row-reverse",
+    disabled?: boolean,
     loading?: boolean,
     icon?: ComponentProps<typeof MaterialCommunityIcons>["name"],
 }

@@ -9,10 +9,14 @@ A simple music app made with expo + react native.
 2. Start app + server:
    Run `_run.bat`
 
+3. Update packages if needed:
+   Run ``npx expo install --fix``
+
 OR
 
 1. `[open cmd in root folder] => npm install && cd server && npm install && cd .. && npm run start`
 2. `[open cmd in root/server folder] => npm run dev`
+
 
 - [How to setup your own S3 bucket](https://www.youtube.com/watch?v=eQAIojcArRY)
 

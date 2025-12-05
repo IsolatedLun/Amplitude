@@ -1,3 +1,4 @@
+import { IndexAPI_Reset } from "@/api/indexApi";
 import { AuthUserContext } from "@/components/auth/AuthProvider";
 import Clutton from "@/components/clutton/Clutton";
 import { ECluttonTheme } from "@/components/clutton/types";
@@ -16,7 +17,8 @@ const SettingsTab = () => {
     }
 
     function handleResetAppData() {
-
+        IndexAPI_Reset()
+            .then(() => logout());
     }
 
     return(

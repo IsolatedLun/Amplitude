@@ -1,0 +1,25 @@
+meta {
+  name: User_Edit
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:3000/users/edit
+  body: formUrlEncoded
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OTMzMzQzNmFiN2FmOWY3NzI3NTNmMGMiLCJ1c2VybmFtZSI6IldvdyIsInJlZnJlc2hUb2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUoxZFdsa0lqb2laR1ZoWkdWa01EUXRNelF5T1MwME9HRTBMV0poTnpFdE5XVTROVFJtTUdOa01tRXhJaXdpYVdGMElqb3hOelkwT1RZek16Z3lMQ0psZUhBaU9qRTNOamMxTlRVek9ESjkuLWN5dFZQZFRzZ04xcjFEUkM1MjFQSW1JYTR4RGlsR3FCdUdRZlBITlpLayIsInBhc3N3b3JkIjoiJDJiJDEwJERCR2t3Y294WEVqNXYzeW90dTRVZnVXS1N2c1JpdUNFRzlobGtEbi5uMWNFRmREUjNmWEJ1IiwicHJvZmlsZSI6IiIsImlhdCI6MTc2NDk2NTYwMiwiZXhwIjoxNzY1NTcwNDAyfQ.RcfkVhCL0UdkmGCV2Z7JMQXKGmsFGbNul62J_Y7--yU
+}
+
+body:form-urlencoded {
+  username: Wow
+  password: ILike67and69
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

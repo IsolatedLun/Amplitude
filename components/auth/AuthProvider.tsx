@@ -1,17 +1,33 @@
-import { MOCK_USER } from "@/utils/global";
-import React, { createContext, useState } from "react";
-import { IAuthUser, IAuthUserContext } from "./types";
+import { UserAPI_Auth } from "@/api/userApi";
+import { IUser } from "@/server/src/routes/types";
+import { useRouter } from "expo-router";
+import * as SecureStore from "expo-secure-store";
+import React, { createContext, useEffect, useState } from "react";
+import { IAuthUserContext } from "./types";
 
 const AuthUserContext = createContext<IAuthUserContext | null>(null);
 
 const AuthProvider = ({ children } : { children: React.ReactNode }) => {
-    const [user, setUser] = useState<IAuthUser | null>(MOCK_USER);
+    const router = useRouter();
+    const [user, setUser] = useState<IUser | null>(null);
 
-    async function login(v: IAuthUser) {
+    useEffect(() => {        
+        const tok = SecureStore.getItem("tok");
+        if(tok) {
+            UserAPI_Auth(tok)
+                .then((res) => login(res.data.user, tok))
+                .catch(() => SecureStore.deleteItemAsync("tok"));
+        }
+    }, []);
 
+    async function login(v: IUser, tok: string) {
+        setUser(v);
+        await SecureStore.setItemAsync("tok", tok);
+        router.push("/(tabs)/songs");
     }
 
-    function logout() {
+    async function logout() {
+        await SecureStore.deleteItemAsync("tok");
         setUser(null);
     }
     

@@ -1,4 +1,4 @@
-import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import sharp from "sharp";
 import { BUCKET_NAME } from "./aws";
 
@@ -33,6 +33,18 @@ export function createPutObjectCommand(
             Key: key,
             Body: buf,
             ContentType: file.mimetype,
+        }),
+        key
+    ]
+};
+
+export function createDeleteObjectCommand(
+        key: string, 
+): [DeleteObjectCommand, string] {
+    return [
+        new DeleteObjectCommand({
+            Bucket: BUCKET_NAME,
+            Key: key,
         }),
         key
     ]

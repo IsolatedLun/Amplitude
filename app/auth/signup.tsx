@@ -1,5 +1,6 @@
+import { ISignUpForm } from "@/api/types";
+import { UserAPI_SignUp } from "@/api/userApi";
 import Anchor from "@/components/anchor/Anchor";
-import { IAuthUser } from "@/components/auth/types";
 import Card from "@/components/card/Card";
 import { ECardBorderThicknessMode, ECardPaddingMode } from "@/components/card/types";
 import Clutton from "@/components/clutton/Clutton";
@@ -9,7 +10,7 @@ import { EIcon_Size, EIcon_Theme } from "@/components/icon/types";
 import WordInput from "@/components/inputs/WordInput";
 import { ETypography_FontSize } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
-import { USER_VALIDATION_SCHEMA } from "@/utils/global";
+import { signUpValidationSchema_Yup } from "@/server/src/routes/user/schemas";
 import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import { StyleSheet, View } from "react-native";
@@ -17,14 +18,15 @@ import { StyleSheet, View } from "react-native";
 const SignUpPage = () => {
     const router = useRouter();
 
-    function handleSubmit(v: IAuthUser) {
-        
+    function handleSubmit(v: ISignUpForm) {
+        UserAPI_SignUp(v)
+            .then(() => router.push("/auth/login"))
     }
     
     return(
         <Formik 
-            validationSchema={USER_VALIDATION_SCHEMA}
-            initialValues={{ username: "", password: "" }}
+            validationSchema={signUpValidationSchema_Yup}
+            initialValues={{ username: "", password: "", repeatPassword: "" }}
             onSubmit={handleSubmit}
         >
             {
@@ -56,6 +58,15 @@ const SignUpPage = () => {
                                     error={errors.password}
                                     onInput={handleChange("password")}
                                     onBlur={handleBlur("password")}
+                                />
+
+                                <WordInput 
+                                    title="Repeat Password"
+                                    placeholder="Repeat password"
+                                    value={values.repeatPassword}
+                                    error={errors.repeatPassword}
+                                    onInput={handleChange("repeatPassword")}
+                                    onBlur={handleBlur("repeatPassword")}
                                 />
 
                             </View>

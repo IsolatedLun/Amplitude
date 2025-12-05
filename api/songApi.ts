@@ -21,7 +21,6 @@ export const SongAPI_UploadSong: (data: FormData) => Promise<Response> = (data: 
     { method: "POST", body: data }
 )
 
-export const SongAPI_UpdateSong: (data: FormData) => Promise<void> = (data: FormData) => api.post("", {
-    method: "PUT",
+export const SongAPI_UpdateSong: (data: FormData) => Promise<void> = (data: FormData) => api.put("", {
     body: data
 })

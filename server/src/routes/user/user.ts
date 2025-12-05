@@ -1,14 +1,17 @@
 import bcrypt from "bcrypt";
 import express from "express";
+import { expressjwt } from "express-jwt";
 import * as jwt from "jsonwebtoken";
+import { ObjectId } from "mongodb";
 import db from "../../db/connection";
 import { generateUUID } from "../../utils";
 import { IUser } from "../types";
-import { loginValidationSchema, signUpValidationSchema } from "./schemas";
+import { editUserValidationSchema, loginValidationSchema, signUpValidationSchema } from "./schemas";
 
 const UserRouter = express.Router();
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || "shhhhh";
 const saltRounds = 10;
+const jwtProtectedRoute = expressjwt({ secret: JWT_SECRET_KEY, algorithms: ["HS256"] });
 
 UserRouter.get("/", async(req, res) => {
     const collection = db.collection<IUser>("user");
@@ -17,8 +20,15 @@ UserRouter.get("/", async(req, res) => {
 });
 
 // ========================================
-// Login/Signup/Logout
+// Auth/Login/Signup/Edit/Logout
 // ========================================
+
+// If the token is invalid/unauthorized, the middleware will send a 401
+UserRouter.post("/auth", jwtProtectedRoute, async(req, res) => {
+    const authUser: IUser = (req as any).auth;
+    res.status(200).send({ user: authUser, ok: true });
+});
+
 UserRouter.post("/login", async(req, res) => {
     const { value, error } = loginValidationSchema.validate(req.body);
     if(error)
@@ -35,7 +45,7 @@ UserRouter.post("/login", async(req, res) => {
         return res.status(400).send({ error: "Incorrect username/password" });
 
     const tok = jwt.sign(user, JWT_SECRET_KEY, { expiresIn: "7d" });
-    res.status(200).send({ token: tok });
+    res.status(200).send({ user, token: tok });
 
 });
 
@@ -56,5 +66,31 @@ UserRouter.post("/signup", async(req, res) => {
         res.status(200).send({ ok: true });
     });
 });
+
+UserRouter.post("/edit", jwtProtectedRoute,  async(req, res) => {
+    const authUser: IUser = (req as any).auth;
+    const { value, error } = editUserValidationSchema.validate(req.body);
+    if(error)
+        return res.status(400).send({ error: error.message });
+    
+    const collection = db.collection<IUser>("user");
+    const { username, password } = value;
+    const user = await collection.findOne({ username: authUser.username });
+    if(!user)
+        return res.status(404).send({ error: `User with username <${value.username}> not found` });
+
+    if(authUser.username != username) {
+        const existingUser = await collection.findOne({ username: value.username });
+        if(existingUser)
+            return res.status(400).send({ error: `User with username <${value.username}> already exists` });
+    }
+
+    bcrypt.hash(password, saltRounds, async(err, hash) => {
+        await collection.updateOne({ _id: new ObjectId(user._id) }, { $set: { username, password: hash } });
+
+        const tok = jwt.sign(user, JWT_SECRET_KEY, { expiresIn: "7d" });
+        res.status(200).send({ tok, ok: true });
+    });
+})
 
 export default UserRouter;

@@ -1,11 +1,8 @@
-export interface IAuthUser {
-    username: string,
-    password: string
-}
+import { IUser } from "@/server/src/routes/types"
 
 export interface IAuthUserContext {
-    user: IAuthUser | null,
+    user: IUser | null,
 
-    login: (v: IAuthUser) => Promise<void>,
+    login: (v: IUser, tok: string) => Promise<void>,
     logout: () => void
 }

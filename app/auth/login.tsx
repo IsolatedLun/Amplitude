@@ -1,6 +1,7 @@
+import { IApiEror, ILoginForm } from "@/api/types";
+import { UserAPI_Login } from "@/api/userApi";
 import Anchor from "@/components/anchor/Anchor";
 import { AuthUserContext } from "@/components/auth/AuthProvider";
-import { IAuthUser } from "@/components/auth/types";
 import Card from "@/components/card/Card";
 import { ECardBorderThicknessMode, ECardPaddingMode } from "@/components/card/types";
 import Clutton from "@/components/clutton/Clutton";
@@ -10,7 +11,7 @@ import { EIcon_Size, EIcon_Theme } from "@/components/icon/types";
 import WordInput from "@/components/inputs/WordInput";
 import { ETypography_FontSize, ETypography_Theme } from "@/components/typography/types";
 import Typography from "@/components/typography/Typography";
-import { USER_VALIDATION_SCHEMA } from "@/utils/global";
+import { loginValidationSchema_Yup } from "@/server/src/routes/user/schemas";
 import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import { useContext, useState } from "react";
@@ -21,14 +22,15 @@ const LoginPage = () => {
     const { login } = useContext(AuthUserContext)!;
     const [loginError, setLoginError] = useState<string | null>(null);
 
-
-    function handleSubmit(v: IAuthUser) {
-
+    function handleSubmit(v: ILoginForm) {
+        UserAPI_Login(v)
+            .then(res => login(res.data.user, res.data.token))
+            .catch((err: IApiEror) => setLoginError(err.error));
     }
     
     return(
         <Formik 
-            validationSchema={USER_VALIDATION_SCHEMA}
+            validationSchema={loginValidationSchema_Yup}
             initialValues={{ username: "", password: "" }}
             onSubmit={handleSubmit}
         >

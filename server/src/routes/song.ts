@@ -110,7 +110,7 @@ SongRouter.put("/:id", songUploadMiddleWare, async(req, res) => {
 
 
         await collection.findOneAndUpdate({ _id: new ObjectId(id) }, { $set: data });
-        res.status(200).send({ message: "success" });
+        res.status(200).send({ ok: true });
     } catch(err: any) {
         res.status(400).send({ message: err.message });
     }
@@ -144,9 +144,8 @@ SongRouter.post("", songUploadMiddleWare, async(req, res) => {
         data["audio"] = audioKey;
 
         const song = await collection.insertOne(data);
-        res.status(200).send({ id: song.insertedId });
+        res.status(200).send({ id: song.insertedId, ok: true });
     } catch(err: any) {
-        console.log(req.body.body)
         res.status(400).send({ message: err.message });
     }
 });

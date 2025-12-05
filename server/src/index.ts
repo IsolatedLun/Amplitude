@@ -1,9 +1,13 @@
 import cors from "cors";
 import express from "express";
 import { rateLimit } from "express-rate-limit";
-import SongRouter from "./routes/song";
-import UserRouter from "./routes/user/user";
 import morgan from "morgan";
+import { s3 } from "./aws";
+import db from "./db/connection";
+import SongRouter from "./routes/song";
+import { ISong, IUser } from "./routes/types";
+import UserRouter from "./routes/user/user";
+import { createDeleteObjectCommand } from "./utils";
 
 // ========================================
 // Options
@@ -34,6 +38,25 @@ app.use(cors({
 // ========================================
 app.use("/songs", SongRouter);
 app.use("/users", UserRouter);
+
+app.post("/reset", async(req, res) => {
+    const userCollection = db.collection<IUser>("user");
+    const songCollection = db.collection<ISong>("song");
+
+    const songs = await songCollection.find({}).toArray();
+    for(const song of songs) {
+        const [imageCommand, imageKey] = createDeleteObjectCommand(song.image);
+        const [audioCommand, audioKey] = createDeleteObjectCommand(song.audio);
+
+        await s3.send(imageCommand);
+        await s3.send(audioCommand);
+    }
+
+    await userCollection.deleteMany({});
+    await songCollection.deleteMany({});
+
+    res.status(200).send({ ok: true });
+});
 
 app.listen(PORT, () => {
     console.log(`[Ampl] Server started listening on http://localhost:${PORT}`);

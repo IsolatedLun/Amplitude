@@ -52,12 +52,6 @@ const SongPlayer = (props: ISong) => {
                         size={EIconButton_Size.Large}
                         onPress={handleGoBack}
                     />
-                    <IconButton 
-                        name="dots-vertical"
-                        theme={EIconButton_Theme.Transparent}
-                        size={EIconButton_Size.Large}
-                        onPress={() => null}
-                    />
                 </View>
                 <View style={styles.contentContainer}>
                     <Image source={{ uri: props.image }} style={styles.thumbnailImage} />

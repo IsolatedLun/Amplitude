@@ -1,0 +1,20 @@
+meta {
+  name: User_Delete
+  type: http
+  seq: 5
+}
+
+delete {
+  url: http://localhost:3000/3000/users/delete/:username
+  body: none
+  auth: inherit
+}
+
+params:path {
+  username: 
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
