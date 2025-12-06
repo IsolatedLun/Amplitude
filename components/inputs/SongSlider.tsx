@@ -15,7 +15,7 @@ const SongSlider = (props: ISongSlider) => {
             onValueChange={props.onChange}
 
             value={props.value}
-            minimumValue={0} 
+            minimumValue={0}
             maximumValue={1}
         />
     )

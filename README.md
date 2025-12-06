@@ -10,7 +10,7 @@ A simple music app made with expo + react native.
    Run `_run.bat`
 
 3. Update packages if needed:
-   Run ``npx expo install --fix``
+   Run `npx expo install --fix`
 
 OR
 
@@ -89,7 +89,12 @@ JWT_SECRET_KEY=...
 - [JWT](https://www.npmjs.com/package/jsonwebtoken)
 
 ##### Known issues
-- Due to the way expo handles local files, I cant get the file info during editing, so I cant provide the input with the file name and size (thats why i just show `Change [Image/Audio] File`). [SOLVED]
+- While editing works, even if the files are the same they get overriden => time + resources are wasted. While I can fix this by checking if the old/new md5 hashes have changed, im lazy for that + this app is not for public use :)
+- Not inherently an issue, but the code could be more consistent and cleaner.
 - Expo audio is sometimes glitchy with `loop`, `isPlaying`, `volume` states.
 - Light theme is ugly, need to play around with colors.
 - Some minor (hopefully) bugs may introduce themselves due to me not testing individual components.
+
+##### Solved Issues
+- Due to the way expo handles local files, I cant get the file info during editing, so I cant provide the input with the file name and size (thats why i just show `Change [Image/Audio] File`). [SOLVED]
+  - Solution: By using the deprecated legacy version of `expo-file-system`, I was able to extract the file info.

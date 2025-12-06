@@ -24,9 +24,10 @@ export function optimizeImage(buf: Buffer<ArrayBufferLike>): Promise<Buffer<Arra
 export function createPutObjectCommand(
         buf: Buffer<ArrayBufferLike>, 
         path: string, 
-        file: Express.Multer.File
+        file: Express.Multer.File,
+        exists: boolean = false
 ): [PutObjectCommand, string] {
-    const key = path + generateHexFname();
+    const key = path + (!exists ? generateHexFname() : "");
     return [
         new PutObjectCommand({
             Bucket: BUCKET_NAME,

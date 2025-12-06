@@ -31,7 +31,7 @@ const SongCard = (props: ISongPreview) => {
 
     function handleEditPress() {
         setOpenModal(false);
-        router.replace(`/(tabs)/upload?editID=${props._id}`);
+        router.replace(`/edit/${props._id}`);
     }
 
     return(

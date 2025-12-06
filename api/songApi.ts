@@ -19,8 +19,9 @@ export const SongAPI_FetchSong: (id: string) => Promise<ISong> = (id: string) =>
 export const SongAPI_UploadSong: (data: FormData) => Promise<Response> = (data: FormData) => fetch(
     SERVER_URL + "/songs",
     { method: "POST", body: data }
-)
+);
 
-export const SongAPI_UpdateSong: (data: FormData) => Promise<void> = (data: FormData) => api.put("", {
-    body: data
-})
+export const SongAPI_UpdateSong: (id: string, data: FormData) => Promise<Response> = (id: string, data: FormData) => fetch(
+    SERVER_URL + "/songs/update/" + id,
+    { method: "POST", body: data }
+);;

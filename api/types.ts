@@ -1,8 +1,20 @@
 import { IUser } from "@/server/src/routes/types"
 
-export interface IApiEror {
+export interface IApiError {
     error: string
 }
+
+// ===
+
+export interface IExpoFile { uri: string, name: string, type: string };
+export interface ISongForm {
+    title: string,
+    author: string,
+    image: IExpoFile | null,
+    audio: IExpoFile | null
+}
+
+// ===
 
 export interface ISignUpForm {
     username: string,

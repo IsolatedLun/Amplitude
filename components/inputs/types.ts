@@ -1,3 +1,4 @@
+import { IExpoFile } from "@/api/types"
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
 import { FileInfo } from "expo-file-system"
 import { ComponentProps } from "react"
@@ -26,17 +27,17 @@ export interface IFileInfoCard {
 
 type IFileData = { uri: string, name: string, type: string }
 export interface IImageInput {
-    value: string,
+    value: IExpoFile | null,
     
-    onInput: (f: IFileData) => void,
+    onInput: (f: IExpoFile | null) => void,
     onBlur?: (e: any) => void,
     error?: string
 }
 
 export interface IAudioInput {
-    value: string,
+    value: IExpoFile | null,
     
-    onInput: (f: IFileData) => void,
+    onInput: (f: IExpoFile | null) => void,
     onBlur?: (e: any) => void,
     error?: string
 }

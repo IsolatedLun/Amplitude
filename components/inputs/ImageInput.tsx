@@ -20,6 +20,9 @@ const ImageInput = (props: IImageInput) => {
             setFileInfo(null);
             setShowPreview(false);
             setPreview("");
+        } else {
+            setFileInfo(props.value as any);
+            setPreview(props.value.uri);
         }
     }, [props.value]);
 
@@ -29,7 +32,7 @@ const ImageInput = (props: IImageInput) => {
 
         const res = await ImagePicker.launchImageLibraryAsync({ quality: 1, allowsEditing: true });
         if(res.canceled)
-            return props.onInput({ uri: "", name: "", type: "" });
+            return props.onInput(null);
         
         const uri: string = res.assets[0].uri;
         const f: File = new File(Paths.cache, uri);

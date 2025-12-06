@@ -77,10 +77,11 @@ SongRouter.delete("/:id", async(req, res) => {
 // ========================================
 // Post/Put Song
 // ========================================
-SongRouter.put("/:id", songUploadMiddleWare, async(req, res) => {
+SongRouter.post("/update/:id", songUploadMiddleWare, async(req, res) => {
     const collection = db.collection<ISong>("song");
     const { id } = req.params as { id: string };
-    if(!collection.findOne({ _id: new ObjectId(id) }))
+    const song = await collection.findOne({ _id: new ObjectId(id) });
+    if(!song)
         return res.status(404).send({ "message": `Song with id of <${id}> not found` });
         
     try {
@@ -89,8 +90,9 @@ SongRouter.put("/:id", songUploadMiddleWare, async(req, res) => {
             const imageBuffer = await optimizeImage(req.files.image[0].buffer);
             const [imageCommand, imageKey] = createPutObjectCommand(
                 imageBuffer, 
-                SONG_IMAGE_FOLDER, 
-                req.files.image[0]
+                song.image, 
+                req.files.image[0],
+                true
             );
             
             data["image"] = imageKey;
@@ -100,8 +102,9 @@ SongRouter.put("/:id", songUploadMiddleWare, async(req, res) => {
         if(req.files && "audio" in req.files) {
             const [audioCommand, audioKey] = createPutObjectCommand(
                 req.files.audio[0].buffer, 
-                SONG_AUDIO_FOLDER, 
-                req.files.audio[0]
+                song.audio,
+                req.files.audio[0],
+                true
             );
     
             data["audio"] = audioKey;
@@ -124,7 +127,6 @@ SongRouter.post("", songUploadMiddleWare, async(req, res) => {
         if(!(req.files && "image" in req.files && "audio" in req.files))
             throw new Error("Missing files");
 
-        console.log("received")
         const imageBuffer = await optimizeImage(req.files.image[0].buffer)
         const [imageCommand, imageKey] = createPutObjectCommand(
             imageBuffer, 
@@ -146,7 +148,7 @@ SongRouter.post("", songUploadMiddleWare, async(req, res) => {
         const song = await collection.insertOne(data);
         res.status(200).send({ id: song.insertedId, ok: true });
     } catch(err: any) {
-        res.status(400).send({ message: err.message });
+        res.status(400).send({ error: err.message });
     }
 });
 

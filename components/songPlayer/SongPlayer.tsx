@@ -2,7 +2,7 @@ import { ISong } from '@/server/src/routes/types';
 import { formatToMinutes } from '@/utils/funcs';
 import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import { useRouter } from 'expo-router';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Image, StyleSheet, View } from "react-native";
 import CenterContainer from "../containers/CenterContainer";
 import IconButton from '../iconButton/IconButton';
@@ -14,9 +14,13 @@ import { ETypography_FontSize, ETypography_Theme } from '../typography/types';
 
 const SongPlayer = (props: ISong) => {
     const router = useRouter();
-    const player = useAudioPlayer(props.audio);
+    const player = useAudioPlayer();
     const status = useAudioPlayerStatus(player);
     const { state: { themes } } = useContext(ColorSchemeContext)!;
+
+    useEffect(() => {
+        player.replace(props.audio);
+    }, [])
 
     function handlePlayPress() {
         if(status.playing)

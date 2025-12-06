@@ -1,4 +1,4 @@
-import { IApiEror, ILoginForm } from "@/api/types";
+import { IApiError, ILoginForm } from "@/api/types";
 import { UserAPI_Login } from "@/api/userApi";
 import Anchor from "@/components/anchor/Anchor";
 import { AuthUserContext } from "@/components/auth/AuthProvider";
@@ -25,7 +25,7 @@ const LoginPage = () => {
     function handleSubmit(v: ILoginForm) {
         UserAPI_Login(v)
             .then(res => login(res.data.user, res.data.token))
-            .catch((err: IApiEror) => setLoginError(err.error));
+            .catch((err: IApiError) => setLoginError(err.error));
     }
     
     return(

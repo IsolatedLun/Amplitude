@@ -13,18 +13,18 @@ const MModal = (props: IMModal) => {
             backdropColor="hsla(0 0% 0% / 0.3)"
             visible={props.open}
         >
-        <Card style={styles.modalContainer} borderThicknessMode={ECardBorderThicknessMode.Thin}>
-            { props.children }
+            <Card style={styles.modalContainer} borderThicknessMode={ECardBorderThicknessMode.Thin}>
+                { props.children }
 
-            <TouchableOpacity onPress={props.closeFn}>
-                <Typography 
-                    theme={ETypography_Theme.Primary} 
-                    style={styles.modalCloseText}>
-                        Cancel
-                </Typography>
-            </TouchableOpacity>
-        </Card>
-    </Modal>
+                <TouchableOpacity onPress={props.closeFn}>
+                    <Typography 
+                        theme={ETypography_Theme.Primary} 
+                        style={styles.modalCloseText}>
+                            Cancel
+                    </Typography>
+                </TouchableOpacity>
+            </Card>
+        </Modal>
     )
 };
 

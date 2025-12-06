@@ -3,7 +3,6 @@ import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import { getDocumentAsync } from "expo-document-picker";
 import { FileInfo } from "expo-file-system";
 import { getInfoAsync } from "expo-file-system/legacy";
-import { useFocusEffect } from "expo-router";
 import * as mime from 'mime';
 import { useEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
@@ -22,19 +21,17 @@ const AudioInput = (props: IAudioInput) => {
     const [fileInfo, setFileInfo] = useState<FileInfo | null>(null);
 
     useEffect(() => {
+        console.log(props)
         if(!props.value) {
-            player.pause();
-            player.remove();
+            if(player.currentStatus.playing) {
+                player.pause();
+            }
             setFileInfo(null);
+        } else {
+            setFileInfo(props.value as any);
+            player.replace(props.value.uri);
         }
     }, [props.value]);
-
-    useFocusEffect(() => {
-        return () => {
-            player.pause();
-            player.remove();
-        }
-    });
 
     async function pickAudio() {
         const res = await getDocumentAsync({ type: "audio/*", copyToCacheDirectory: true });
